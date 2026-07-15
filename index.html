@@ -243,8 +243,29 @@
     50%{transform:translateY(6px);}
   }
 
+  /* ── Curva de transición hero → bienvenida + badge superpuesto ── */
+  .hero-curva{
+    position:absolute;
+    left:0; right:0; bottom:-1px;
+    line-height:0;
+    z-index:2;
+  }
+  .hero-curva svg{width:100%; height:auto; display:block;}
+  .hero-badge{
+    position:absolute;
+    left:50%; bottom:-46px;
+    transform:translateX(-50%);
+    z-index:3;
+    width:92px; height:92px;
+    border-radius:50%;
+    background:var(--crema);
+    box-shadow:0 18px 40px -14px rgba(9,26,26,0.35);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .hero-badge svg{width:52px; height:52px;}
+
   /* ══════════════ BIENVENIDA ══════════════ */
-  .bienvenida{background:var(--crema);}
+  .bienvenida{background:var(--crema); padding-top:150px;}
   .bienvenida .wrap{max-width:680px; text-align:center;}
   .bienvenida p.grande{
     font-family:'Fraunces',serif;
@@ -331,6 +352,78 @@
   }
   .btn-linea:hover{gap:16px; color:var(--naranja); border-color:var(--naranja);}
   .btn-linea .flecha-cta{font-family:'Christie','Fraunces',serif; font-size:15px;}
+
+  /* ── Visor de mapa estático (edge-to-edge, con zoom) ── */
+  .mapa-visor{
+    position:relative;
+    width:100vw;
+    margin-left:calc(50% - 50vw);
+    aspect-ratio:16/9;
+    background:var(--crema);
+    overflow:auto;
+    -webkit-overflow-scrolling:touch;
+    touch-action:pinch-zoom;
+  }
+  .mapa-visor::-webkit-scrollbar{display:none;}
+  .mapa-visor-img{
+    min-width:100%;
+    min-height:100%;
+    display:block;
+    margin:auto;
+    object-fit:contain;
+    transform-origin:center center;
+    transition:transform 0.2s ease;
+  }
+  .mapa-visor .placeholder{
+    position:absolute; inset:0;
+    display:flex; align-items:center; justify-content:center;
+    text-align:center;
+    color:var(--gris);
+    font-size:14px;
+    font-style:italic;
+    padding:20px;
+  }
+  .mapa-zoom{
+    position:absolute;
+    bottom:16px; right:16px;
+    display:flex;
+    flex-direction:column;
+    gap:1px;
+    box-shadow:0 10px 26px -10px rgba(23,53,52,0.4);
+    border-radius:4px;
+    overflow:hidden;
+  }
+  .mapa-zoom button{
+    width:38px; height:38px;
+    border:none;
+    background:var(--hueso);
+    color:var(--petroleo);
+    font-family:'Karla',sans-serif;
+    font-size:18px;
+    font-weight:700;
+    cursor:pointer;
+  }
+  .mapa-zoom button:hover{background:var(--crema);}
+
+  .mapa-cta{
+    margin-top:28px;
+    text-align:center;
+  }
+  .btn-mapa-interactivo{
+    display:inline-flex; align-items:center; gap:12px;
+    background:var(--petroleo);
+    color:var(--hueso);
+    text-decoration:none;
+    font-family:'Karla',sans-serif;
+    font-weight:600;
+    font-size:13px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    padding:17px 32px;
+    transition:background 0.25s ease;
+  }
+  .btn-mapa-interactivo:hover{background:var(--tinta);}
+  .btn-mapa-interactivo .flecha-cta{font-family:'Christie','Fraunces',serif; font-size:16px; color:var(--naranja);}
 
   /* ══════════════ ÁLBUM ══════════════ */
   .album{overflow:hidden;}
@@ -530,9 +623,126 @@
   @media (prefers-reduced-motion: reduce){
     *{animation-duration:0.01ms !important; transition:none !important; scroll-behavior:auto !important;}
   }
+
+  /* ══════════════ WHATSAPP — aparece con scroll + popup ══════════════ */
+  .wsp-widget{
+    position:fixed;
+    right:20px; bottom:20px;
+    z-index:60;
+    opacity:0;
+    transform:translateY(16px) scale(0.9);
+    pointer-events:none;
+    transition:opacity 0.35s ease, transform 0.35s ease;
+  }
+  .wsp-widget.visible{
+    opacity:1;
+    transform:translateY(0) scale(1);
+    pointer-events:auto;
+  }
+  .wsp-fab{
+    width:56px; height:56px;
+    border-radius:50%;
+    border:none;
+    background:var(--petroleo);
+    color:var(--hueso);
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+    box-shadow:0 14px 34px -10px rgba(9,26,26,0.55);
+    transition:background 0.25s ease, transform 0.2s ease;
+  }
+  .wsp-fab:hover{background:var(--tinta); transform:translateY(-2px);}
+  .wsp-fab svg{width:26px; height:26px;}
+
+  .wsp-popup{
+    position:absolute;
+    bottom:70px; right:0;
+    width:250px;
+    background:var(--hueso);
+    border-radius:14px;
+    box-shadow:0 24px 50px -16px rgba(9,26,26,0.45);
+    padding:18px 20px;
+    opacity:0;
+    transform:translateY(10px) scale(0.96);
+    pointer-events:none;
+    transform-origin:bottom right;
+    transition:opacity 0.2s ease, transform 0.2s ease;
+  }
+  .wsp-popup::after{
+    content:"";
+    position:absolute;
+    bottom:-8px; right:22px;
+    width:16px; height:16px;
+    background:var(--hueso);
+    transform:rotate(45deg);
+  }
+  .wsp-widget[data-abierto="true"] .wsp-popup{
+    opacity:1;
+    transform:translateY(0) scale(1);
+    pointer-events:auto;
+  }
+  .wsp-popup .saludo{font-size:20px; margin-bottom:4px;}
+  .wsp-popup .titulo{
+    font-family:'Fraunces',serif;
+    font-size:18px;
+    color:var(--petroleo);
+    margin-bottom:4px;
+  }
+  .wsp-popup .sub{
+    font-family:'Karla',sans-serif;
+    font-size:13px;
+    color:var(--gris);
+    line-height:1.5;
+    margin-bottom:14px;
+  }
+  .wsp-popup-btn{
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--petroleo);
+    color:var(--hueso);
+    text-decoration:none;
+    font-family:'Karla',sans-serif;
+    font-size:12.5px;
+    font-weight:600;
+    letter-spacing:0.05em;
+    padding:10px 16px;
+    border-radius:100px;
+    transition:background 0.2s ease;
+  }
+  .wsp-popup-btn:hover{background:var(--tinta);}
 </style>
 </head>
 <body>
+
+<div class="wsp-widget" id="wspWidget" data-abierto="false">
+  <div class="wsp-popup">
+    <p class="saludo">🙋🏻‍♀️</p>
+    <p class="titulo">¡Hola!</p>
+    <p class="sub">Chateá con <strong>EugenIA</strong>, la asistente virtual del Club.</p>
+    <a class="wsp-popup-btn" href="https://wa.me/5491161888188?text=Hola%20EugenIA%2C%20me%20dijeron%20que%20sos%20la%20asistente%20virtual%20del%20Club%2C%20quer%C3%ADa%20hacerte%20una%20consulta%3A%20" target="_blank" rel="noopener">Iniciar chat</a>
+  </div>
+  <button class="wsp-fab" id="wspFab" aria-label="Chatear con EugenIA por WhatsApp" aria-expanded="false">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.52 0-10 4.48-10 10 0 1.77.46 3.45 1.27 4.9L2 22l5.25-1.38a9.96 9.96 0 0 0 4.79 1.22h.01c5.52 0 10-4.48 10-10s-4.49-9.84-10.01-9.84Zm5.86 14.1c-.25.7-1.44 1.34-1.99 1.42-.51.08-1.15.11-1.86-.12-.43-.13-.98-.32-1.68-.63-2.96-1.28-4.89-4.26-5.04-4.46-.15-.2-1.21-1.61-1.21-3.07 0-1.46.77-2.18 1.04-2.48.27-.3.6-.37.8-.37.2 0 .4 0 .57.01.19.01.43-.07.67.51.25.6.85 2.07.92 2.22.07.15.12.33.02.53-.1.2-.15.33-.3.5-.15.18-.31.4-.44.54-.15.15-.3.31-.13.61.17.3.76 1.25 1.63 2.03 1.12 1 2.06 1.31 2.36 1.46.3.15.48.13.65-.07.18-.2.75-.87.95-1.17.2-.3.4-.24.66-.15.27.1 1.73.82 2.02.97.3.15.5.22.57.35.07.13.07.75-.18 1.45Z"/></svg>
+  </button>
+</div>
+<script>
+  (function(){
+    var widget = document.getElementById('wspWidget');
+    var fab = document.getElementById('wspFab');
+    fab.addEventListener('click', function(e){
+      e.stopPropagation();
+      var abierto = widget.getAttribute('data-abierto') === 'true';
+      widget.setAttribute('data-abierto', abierto ? 'false' : 'true');
+      fab.setAttribute('aria-expanded', abierto ? 'false' : 'true');
+    });
+    document.addEventListener('click', function(e){
+      if(!widget.contains(e.target)) widget.setAttribute('data-abierto','false');
+    });
+    function checkScroll(){
+      widget.classList.toggle('visible', window.scrollY > window.innerHeight * 0.6);
+    }
+    window.addEventListener('scroll', checkScroll, {passive:true});
+    checkScroll();
+  })();
+</script>
 
 <nav class="nav" id="navMenu" data-open="false" data-scrolled="false">
   <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navList" aria-label="Abrir menú">
@@ -590,6 +800,21 @@
     <span class="v"></span>
     <span class="v"></span>
   </a>
+
+  <div class="hero-curva" aria-hidden="true">
+    <svg viewBox="0 0 1440 90" preserveAspectRatio="none">
+      <path d="M0,40 C 320,90 1120,-10 1440,40 L1440,90 L0,90 Z" fill="#efe9dc"/>
+    </svg>
+  </div>
+  <div class="hero-badge" aria-hidden="true">
+    <svg viewBox="0 0 132 132">
+      <circle cx="66" cy="66" r="26" fill="#deaf4d"/>
+      <path d="M66 96 C 50 100, 40 90, 42 76 C 56 78, 66 84, 66 96 Z" fill="#c4df57"/>
+      <path d="M66 96 C 82 100, 92 90, 90 76 C 76 78, 66 84, 66 96 Z" fill="#c4df57"/>
+      <path d="M40 66 C 36 50, 46 40, 60 42 C 58 56, 52 66, 40 66 Z" fill="#c4df57"/>
+      <path d="M92 66 C 96 50, 86 40, 72 42 C 74 56, 80 66, 92 66 Z" fill="#c4df57"/>
+    </svg>
+  </div>
 </header>
 
 <!-- ══════════════ BIENVENIDA ══════════════ -->
@@ -600,25 +825,57 @@
   </div>
 </section>
 
-<!-- ══════════════ VISITANOS (una sección, mapa embebido adentro) ══════════════ -->
-<!-- ⚠ Confirmar URL real de Mapa La Eugenia y de EugenIA (Comunicador) -->
+<!-- ══════════════ VISITANOS (mapa estático + acceso al mapa interactivo) ══════════════ -->
+<!-- ⚠ Falta: imagen del mapa estático del barrio (fotos/mapa-barrio.jpg) y la URL real de Mapa La Eugenia -->
 <section class="visitanos" id="visitanos">
   <div class="wrap">
     <div class="visitanos-header">
       <span class="eyebrow">¿Nos visitás?</span>
       <h2 class="serif">Encontrá tu camino a La Eugenia</h2>
-      <p>Este mapa te orienta dentro del barrio. Si venís de afuera o preferís preguntar antes, usá los links de abajo.</p>
+      <p>Así se ve el barrio desde arriba. Para orientarte lote por lote, usá el mapa interactivo.</p>
     </div>
+  </div>
 
-    <iframe class="mapa-frame" src="https://clubdecampolaeugenia.github.io/mapa-la-eugenia/" title="Mapa interactivo Club de Campo La Eugenia" loading="lazy"></iframe>
-    <p class="mapa-nota">Ruta Provincial 105, Km 5 — Garupá, Misiones.</p>
+  <div class="mapa-visor" id="mapaVisor">
+    <!-- Reemplazar por: <img class="mapa-visor-img" id="mapaImg" src="fotos/mapa-barrio.jpg" alt="Mapa del barrio La Eugenia"> -->
+    <div class="placeholder">Mapa estático del barrio<br>(pendiente — pasame la imagen)</div>
+    <div class="mapa-zoom">
+      <button type="button" id="zoomIn" aria-label="Acercar">+</button>
+      <button type="button" id="zoomOut" aria-label="Alejar">&minus;</button>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <p class="mapa-nota" style="text-align:center; margin-top:18px;">Ruta Provincial 105, Km 5 — Garupá, Misiones.</p>
+
+    <div class="mapa-cta">
+      <a class="btn-mapa-interactivo" href="https://clubdecampolaeugenia.github.io/mapa-la-eugenia/">Abrir mapa interactivo <span class="flecha-cta">&#8594;</span></a>
+    </div>
 
     <div class="visitanos-links">
       <a class="btn-linea" href="https://www.google.com/maps/dir/?api=1&destination=Club%20de%20Campo%20La%20Eugenia%2C%20Ruta%20Provincial%20105%20Km%205%2C%20Garup%C3%A1%2C%20Misiones" target="_blank" rel="noopener">Cómo llegar desde afuera <span class="flecha-cta">&#8594;</span></a>
-      <a class="btn-linea" href="https://clubdecampolaeugenia.github.io/comunicador-la-eugenia/">Consultar a EugenIA <span class="flecha-cta">&#8594;</span></a>
+      <a class="btn-linea" href="https://wa.me/5491161888188?text=Hola%20EugenIA%2C%20me%20dijeron%20que%20sos%20la%20asistente%20virtual%20del%20Club%2C%20quer%C3%ADa%20hacerte%20una%20consulta%3A%20" target="_blank" rel="noopener">Consultar a EugenIA <span class="flecha-cta">&#8594;</span></a>
     </div>
   </div>
 </section>
+
+<script>
+  (function(){
+    var visor = document.getElementById('mapaVisor');
+    var img = document.getElementById('mapaImg');
+    if(!img) return; // sin imagen todavía, no hay nada que zoomear
+    var scale = 1;
+    function apply(){ img.style.transform = 'scale(' + scale + ')'; }
+    document.getElementById('zoomIn').addEventListener('click', function(){
+      scale = Math.min(scale + 0.35, 3);
+      apply();
+    });
+    document.getElementById('zoomOut').addEventListener('click', function(){
+      scale = Math.max(scale - 0.35, 1);
+      apply();
+    });
+  })();
+</script>
 
 <!-- ══════════════ ÁLBUM (CONTENIDO EDITABLE: ÁLBUM) ══════════════ -->
 <section class="album">
