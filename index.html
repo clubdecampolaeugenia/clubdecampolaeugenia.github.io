@@ -181,7 +181,16 @@
   .hero::before{
     content:"";
     position:absolute; inset:0; z-index:1;
-    background: linear-gradient(180deg, rgba(9,26,26,0.14) 0%, rgba(9,26,26,0.08) 40%, rgba(9,26,26,0.62) 100%);
+    background: linear-gradient(180deg, rgba(9,26,26,0.32) 0%, rgba(9,26,26,0.16) 32%, rgba(9,26,26,0.2) 60%, rgba(9,26,26,0.72) 100%);
+    pointer-events:none;
+  }
+  /* Velo tenue color petróleo: unifica el tono de las 8 fotos del carrusel y suma sofisticación */
+  .hero::after{
+    content:"";
+    position:absolute; inset:0; z-index:1;
+    background:var(--petroleo);
+    mix-blend-mode:multiply;
+    opacity:0.16;
     pointer-events:none;
   }
   .hero-slides{position:absolute; inset:0; z-index:0; overflow:hidden;}
@@ -889,8 +898,14 @@
 <!-- ══════════════ HERO ══════════════ -->
 <header class="hero" id="inicio">
   <div class="hero-slides" aria-hidden="true">
-    <div class="hero-slide activa" style="background-image:url('entrada-1.jpg')"></div>
-    <div class="hero-slide" style="background-image:url('entrada-2.jpg')"></div>
+    <div class="hero-slide activa" style="background-image:url('fotos/hero-01-fachada.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('fotos/hero-02-cancha-tenis.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('fotos/hero-03-pileta-amplio.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('fotos/hero-04-juegos.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('fotos/hero-05-aerea-campo.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('fotos/hero-06-atardecer.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('fotos/hero-07-barrio-aereo.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('fotos/hero-08-pileta-forma.jpg')"></div>
   </div>
   <div class="hero-content">
     <h1>La Eugenia</h1>
@@ -1187,16 +1202,32 @@
         <figcaption>Nuestro portal</figcaption>
       </figure>
       <figure class="marco">
-        <div class="foto vacio"><span>Pileta<br>(foto próximamente)</span></div>
+        <div class="foto"><img src="fotos/album-pileta-panoramica.jpg" alt="Piletas del Club de Campo La Eugenia" loading="lazy"></div>
         <figcaption>Tardes de pileta</figcaption>
       </figure>
       <figure class="marco">
-        <div class="foto vacio"><span>Salón de eventos<br>(foto próximamente)</span></div>
-        <figcaption>Cumpleaños y festejos</figcaption>
+        <div class="foto"><img src="fotos/album-pileta-gente.jpg" alt="Socios disfrutando de la pileta" loading="lazy"></div>
+        <figcaption>Un chapuzón entre amigos</figcaption>
       </figure>
       <figure class="marco">
-        <div class="foto vacio"><span>Sendero<br>(foto próximamente)</span></div>
+        <div class="foto"><img src="fotos/album-atardecer-sendero.jpg" alt="Sendero de piedra hacia la pileta al atardecer" loading="lazy"></div>
         <figcaption>Caminatas al aire libre</figcaption>
+      </figure>
+      <figure class="marco">
+        <div class="foto"><img src="fotos/album-entrada-pinos.jpg" alt="Pinar y casas del club al amanecer" loading="lazy"></div>
+        <figcaption>Entre los pinos</figcaption>
+      </figure>
+      <figure class="marco">
+        <div class="foto"><img src="fotos/album-aro-basquet.jpg" alt="Cancha de básquet y vóley del club" loading="lazy"></div>
+        <figcaption>Tarde de deportes</figcaption>
+      </figure>
+      <figure class="marco">
+        <div class="foto"><img src="fotos/album-bandurrias.jpg" alt="Bandurrias en el césped del club" loading="lazy"></div>
+        <figcaption>Nuestra fauna</figcaption>
+      </figure>
+      <figure class="marco">
+        <div class="foto"><img src="fotos/album-azaleas.jpg" alt="Azaleas en flor en los jardines del club" loading="lazy"></div>
+        <figcaption>Jardines en flor</figcaption>
       </figure>
     </div>
   </div>
