@@ -1895,9 +1895,6 @@ body.scrolled .top-nav{
       <figure class="marco marco-h">
         <div class="foto"><img src="fotos/hero-07-barrio-aereo.jpg" alt="Vista aérea del barrio"></div>
       </figure>
-      <figure class="marco marco-h">
-        <div class="foto"><img src="fotos/hero-08-pileta-forma.jpg" alt="Vista aérea de la pileta"></div>
-      </figure>
     </div>
   </div>
 </section>
@@ -2010,10 +2007,10 @@ body.scrolled .top-nav{
          al cambiar cuál está activa (la que entra ya está en la misma
          posición que la que sale). */
       var reducirMovimiento = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      var cicloPan = reducirMovimiento ? 26000 : 13000;
-      var cicloZoom = reducirMovimiento ? 34000 : 17000;
-      var rangoPan = reducirMovimiento ? 2 : 7;
-      var rangoZoom = reducirMovimiento ? 0.015 : 0.055;
+      var cicloPan = reducirMovimiento ? 22000 : 9500;
+      var cicloZoom = reducirMovimiento ? 30000 : 13000;
+      var rangoPan = reducirMovimiento ? 2 : 10;
+      var rangoZoom = reducirMovimiento ? 0.015 : 0.07;
       (function tick(t){
         var fasePan = (t % cicloPan) / cicloPan;
         var faseZoom = (t % cicloZoom) / cicloZoom;
