@@ -196,6 +196,7 @@
     background:var(--hueso);
     padding:6px 0;
     list-style:none;
+    box-shadow:0 8px 28px rgba(9,26,26,0.16), 0 1px 3px rgba(9,26,26,0.1);
     opacity:0; pointer-events:none;
     transform:translateY(-6px);
     transition:opacity 0.3s ease, transform 0.3s ease;
@@ -529,7 +530,7 @@
 
   /* ── El visor hace zoom in/out de forma continua según la posición de scroll ── */
   .mapa-scroll-zoom{
-    transform:scale(0.94);
+    transform:scale(0.99);
     will-change:transform;
   }
 
@@ -1168,12 +1169,6 @@ footer#contacto{scroll-margin-top:24px;}
   transition:opacity 1.8s ease!important;
   background-size:cover;
 }
-.hero-slide.activa{animation:hero-paneo-a 8.5s linear both!important;}
-.hero-slide:nth-child(2n).activa{animation-name:hero-paneo-b!important;}
-.hero-slide:nth-child(3n).activa{animation-name:hero-paneo-c!important;}
-@keyframes hero-paneo-a{from{background-position:42% 38%}to{background-position:58% 38%}}
-@keyframes hero-paneo-b{from{background-position:56% 42%}to{background-position:44% 36%}}
-@keyframes hero-paneo-c{from{background-position:50% 46%}to{background-position:50% 34%}}
 
 /* Sello del hero centrado sobre el indicador de scroll. */
 .sello-desde{
@@ -1650,8 +1645,7 @@ body.scrolled .top-nav{
 <!-- ══════════════ HERO ══════════════ -->
 <header class="hero" id="inicio">
   <div class="hero-slides" aria-hidden="true">
-    <div class="hero-slide activa" style="background-image:url('fotos/hero-05-aerea-campo.jpg')"></div>
-    <div class="hero-slide" style="background-image:url('fotos/hero-04-juegos.jpg')"></div>
+    <div class="hero-slide activa" style="background-image:url('fotos/hero-04-juegos.jpg')"></div>
     <div class="hero-slide" style="background-image:url('fotos/hero-02-cancha-tenis.jpg')"></div>
     <div class="hero-slide" style="background-image:url('fotos/hero-03-pileta-amplio.jpg')"></div>
     <div class="hero-slide" style="background-image:url('fotos/hero-08-pileta-forma.jpg')"></div>
@@ -1762,7 +1756,11 @@ body.scrolled .top-nav{
     var tapStart = null;    // {x,y,t} para detectar tap/doble tap
     var lastTap = 0;
 
-    function rect(){ return visor.getBoundingClientRect(); }
+    function rect(){
+      var r = visor.getBoundingClientRect();
+      var s = window.__mapaEscala || 1;
+      return { width: r.width / s, height: r.height / s, top: r.top, left: r.left, right: r.right, bottom: r.bottom, escala: s };
+    }
 
     function clamp(){
       var r = rect();
@@ -1810,7 +1808,7 @@ body.scrolled .top-nav{
     visor.addEventListener('wheel', function(e){
       e.preventDefault();
       var r = rect();
-      var px = e.clientX - r.left, py = e.clientY - r.top;
+      var px = (e.clientX - r.left) / r.escala, py = (e.clientY - r.top) / r.escala;
       var factor = e.deltaY < 0 ? 1.14 : 1/1.14;
       zoomAt(px, py, factor);
       apply(false);
@@ -1843,7 +1841,7 @@ body.scrolled .top-nav{
       detenerInercia();
       visor.setPointerCapture(e.pointerId);
       var r = rect();
-      pointers[e.pointerId] = {x:e.clientX - r.left, y:e.clientY - r.top};
+      pointers[e.pointerId] = {x:(e.clientX - r.left) / r.escala, y:(e.clientY - r.top) / r.escala};
       var ids = Object.keys(pointers);
 
       if(ids.length === 1){
@@ -1864,7 +1862,7 @@ body.scrolled .top-nav{
     visor.addEventListener('pointermove', function(e){
       if(!pointers[e.pointerId]) return;
       var r = rect();
-      pointers[e.pointerId] = {x:e.clientX - r.left, y:e.clientY - r.top};
+      pointers[e.pointerId] = {x:(e.clientX - r.left) / r.escala, y:(e.clientY - r.top) / r.escala};
       var ids = Object.keys(pointers);
 
       if(mode === 'pan' && ids.length === 1){
@@ -1905,7 +1903,7 @@ body.scrolled .top-nav{
       /* Doble toque: si soltamos un tap corto y hace poco hubo otro cerca, hacemos zoom */
       if(tapStart && (Date.now() - tapStart.t) < 300){
         var r = rect();
-        var px = tapStart.x - r.left, py = tapStart.y - r.top;
+        var px = (tapStart.x - r.left) / r.escala, py = (tapStart.y - r.top) / r.escala;
         if(Date.now() - lastTap < 320){
           zoomAt(px, py, scale < 2 ? 2 : 1 / 2);
           apply(true);
@@ -1930,7 +1928,7 @@ body.scrolled .top-nav{
     /* Doble clic de mouse: mismo comportamiento que el doble toque */
     visor.addEventListener('dblclick', function(e){
       var r = rect();
-      zoomAt(e.clientX - r.left, e.clientY - r.top, scale < 2 ? 2 : 1 / 2);
+      zoomAt((e.clientX - r.left) / r.escala, (e.clientY - r.top) / r.escala, scale < 2 ? 2 : 1 / 2);
       apply(true);
     });
 
@@ -1957,22 +1955,31 @@ body.scrolled .top-nav{
     -->
     <div class="album-scroll">
       <figure class="marco">
-        <div class="foto" style="--ar:0.563"><img src="fotos/album-pileta-gente.jpg" alt="Socios disfrutando de la pileta" loading="lazy"></div>
+        <div class="foto" style="--ar:0.563"><img src="fotos/album-pileta-gente.jpg" alt="Socios disfrutando de la pileta"></div>
       </figure>
       <figure class="marco">
-        <div class="foto" style="--ar:0.563"><img src="fotos/album-atardecer-sendero.jpg" alt="Sendero de piedra hacia la pileta al atardecer" loading="lazy"></div>
+        <div class="foto" style="--ar:0.563"><img src="fotos/album-atardecer-sendero.jpg" alt="Sendero de piedra hacia la pileta al atardecer"></div>
       </figure>
       <figure class="marco">
-        <div class="foto" style="--ar:1.777"><img src="fotos/album-entrada-pinos.jpg" alt="Pinar y casas del club al amanecer" loading="lazy"></div>
+        <div class="foto" style="--ar:1.777"><img src="fotos/album-entrada-pinos.jpg" alt="Pinar y casas del club al amanecer"></div>
       </figure>
       <figure class="marco">
-        <div class="foto" style="--ar:1.777"><img src="fotos/album-aro-basquet.jpg" alt="Cancha de básquet y vóley del club" loading="lazy"></div>
+        <div class="foto" style="--ar:1.777"><img src="fotos/album-aro-basquet.jpg" alt="Cancha de básquet y vóley del club"></div>
       </figure>
       <figure class="marco">
-        <div class="foto" style="--ar:0.563"><img src="fotos/album-bandurrias.jpg" alt="Bandurrias en el césped del club" loading="lazy"></div>
+        <div class="foto" style="--ar:0.563"><img src="fotos/album-bandurrias.jpg" alt="Bandurrias en el césped del club"></div>
       </figure>
       <figure class="marco">
-        <div class="foto" style="--ar:1.667"><img src="fotos/album-azaleas.jpg" alt="Azaleas en flor en los jardines del club" loading="lazy"></div>
+        <div class="foto" style="--ar:1.667"><img src="fotos/album-azaleas.jpg" alt="Azaleas en flor en los jardines del club"></div>
+      </figure>
+      <figure class="marco">
+        <div class="foto" style="--ar:1.777"><img src="fotos/hero-03-pileta-amplio.jpg" alt="Pileta del club"></div>
+      </figure>
+      <figure class="marco">
+        <div class="foto" style="--ar:1.777"><img src="fotos/hero-02-cancha-tenis.jpg" alt="Cancha de tenis del club"></div>
+      </figure>
+      <figure class="marco">
+        <div class="foto" style="--ar:1.777"><img src="fotos/hero-04-juegos.jpg" alt="Plaza de juegos del club"></div>
       </figure>
     </div>
   </div>
@@ -2178,8 +2185,9 @@ body.scrolled .top-nav{
       var centroM = (mr.top + mr.height / 2) - vh / 2;
       var distMax = vh / 2 + mr.height / 2;
       var progresoM = distMax > 0 ? 1 - clamp(Math.abs(centroM) / distMax, 0, 1) : 0;
-      var escalaM = 0.94 + progresoM * 0.11;
+      var escalaM = 0.99 + progresoM * 0.09;
       mapaZoomWrap.style.transform = 'scale(' + escalaM.toFixed(3) + ')';
+      window.__mapaEscala = escalaM;
     }
 
     ticking = false;
