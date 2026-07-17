@@ -273,12 +273,6 @@
   }
   .hero-slide.activa{
     opacity:1;
-    will-change:opacity, transform, background-position;
-    animation: kenburns 7s ease-in-out infinite alternate;
-  }
-  @keyframes kenburns{
-    from{transform:translateZ(0) scale(1); background-position:left 28%;}
-    to{transform:translateZ(0) scale(1.14); background-position:right 48%;}
   }
   .hero-content{position:relative; z-index:2; max-width:640px; text-shadow:0 1px 18px rgba(9,26,26,0.28);}
   .hero h1{
@@ -392,15 +386,18 @@
   /* ══════════════ VISITANOS (una sola sección, mismo criterio que el resto) ══════════════ */
   .visitanos{background:var(--hueso);}
   .visitanos .wrap{max-width:900px;}
-  .visitanos-header{text-align:center; margin-bottom:64px;}
-  .visitanos-header .eyebrow{justify-content:center; text-align:center;}
-  .visitanos-header h2{font-size:clamp(26px,3.6vw,34px); color:var(--petroleo);}
+  .visitanos-header{text-align:left; margin-bottom:64px;}
+  .visitanos-header .eyebrow{justify-content:flex-start; text-align:left;}
+  .visitanos-titulo-num{position:relative; margin:18px 0 20px;}
+  .visitanos-header h2{position:relative; z-index:1; font-size:clamp(26px,4.4vw,44px); color:var(--petroleo); text-align:left; line-height:1.2;}
+  .visitanos-header h2 em{color:var(--naranja); font-style:italic; font-weight:500;}
+  .visitanos-linea{position:relative; z-index:1; width:44px; height:2px; background:var(--naranja); margin-top:18px;}
   .visitanos-header p{
     margin-top:16px;
     font-size:16px;
     color:var(--gris);
     max-width:46ch;
-    margin-left:auto; margin-right:auto;
+    text-align:left;
   }
 
   /* ── Foto de fondo detrás del encabezado, exclusiva de esta sección (no repetir en hero/álbum) ── */
@@ -555,7 +552,7 @@
   /* ── El visor hace zoom in/out de forma continua según la posición de scroll ── */
   .mapa-scroll-zoom{
     width:100%; height:100%;
-    transform:scale(1.4);
+    transform:scale(1.15);
     will-change:transform;
   }
 
@@ -1086,8 +1083,19 @@
 }
 .hero .sub-marca{
   margin:0 0 22px;
-  font-size:11px;
+  font-size:16px;
   letter-spacing:.20em;
+}
+.hero-ubicacion{
+  display:block;
+  margin-top:16px;
+  font-family:'Karla',sans-serif;
+  font-size:11px;
+  font-weight:500;
+  letter-spacing:.20em;
+  text-transform:uppercase;
+  color:var(--hueso);
+  opacity:.9;
 }
 .hero .tagline{
   max-width:580px;
@@ -1655,7 +1663,7 @@ body.scrolled .top-nav{
   <ul class="nav-menu" id="navList">
     <li class="nav-menu-brand"><span class="club-de-campo">Club de Campo</span><span class="marca-nav">La Eugenia</span></li>
     <li><a href="#inicio">Inicio</a></li>
-    <li><a href="#visitanos">Nos visitás</a></li>
+    <li><a href="#visitanos">Visitanos</a></li>
     <li><a href="#historia">Historia</a></li>
     <li><a href="#instalaciones">Instalaciones</a></li>
     <li><a href="#novedades">Novedades</a></li>
@@ -1698,15 +1706,14 @@ body.scrolled .top-nav{
     <div class="hero-slide activa" style="background-image:url('fotos/hero-05-aerea-campo.jpg')"></div>
     <div class="hero-slide" style="background-image:url('fotos/hero-02-cancha-tenis.jpg')"></div>
     <div class="hero-slide" style="background-image:url('fotos/hero-08-pileta-forma.jpg')"></div>
-    <div class="hero-slide" style="background-image:url('fotos/hero-04-juegos.jpg')"></div>
     <div class="hero-slide" style="background-image:url('fotos/hero-07-barrio-aereo.jpg')"></div>
-    <div class="hero-slide" style="background-image:url('fotos/hero-01-fachada.jpg')"></div>
   </div>
   <div class="hero-content">
-    <span class="sub-marca">Club de Campo · Garupá, Misiones</span>
+    <span class="sub-marca">Club de Campo</span>
     <h1>La Eugenia</h1>
     <p class="tagline">Naturaleza, comunidad y vida al aire libre.</p>
     <div class="hero-acento" aria-hidden="true"><span></span><span></span></div>
+    <span class="hero-ubicacion">Garupá, Misiones</span>
   </div>
   <a href="#bienvenida" class="chevrones" aria-label="Ver más">
     <span class="v"></span>
@@ -1724,8 +1731,8 @@ body.scrolled .top-nav{
 <!-- ══════════════ BIENVENIDA ══════════════ -->
 <section class="bienvenida" id="bienvenida">
   <div class="wrap">
-    <p class="grande">Desde hace más de tres décadas, La Eugenia es el lugar que muchas familias eligieron para vivir.</p>
-    <p class="grande chico">Un lugar para crecer, encontrarse y compartir: para el deporte, los domingos en el Club y los cumpleaños en el Salón. Una comunidad construida y cuidada entre todos, para disfrutarla juntos.</p>
+    <p class="grande">Desde 1989, La Eugenia es la elección de familias que buscan desarrollar su proyecto de vida en un entorno natural, tranquilo y seguro.</p>
+    <p class="grande chico">La biodiversidad, los espacios verdes, el club y una comunidad comprometida crean un ambiente donde el encuentro, el aire libre y el respeto por la naturaleza forman parte de la vida cotidiana.</p>
   </div>
 </section>
 
@@ -1736,8 +1743,11 @@ body.scrolled .top-nav{
     <div class="wrap">
       <div class="visitanos-header">
         <span class="eyebrow">¿Nos visitás?</span>
-        <h2 class="serif">Encontrá tu camino a La Eugenia</h2>
-        <p>Cuatro formas de empezar, según lo que necesites.</p>
+        <div class="visitanos-titulo-num">
+          <h2 class="serif">formas de conectar con<br><em>el club</em></h2>
+          <div class="visitanos-linea" aria-hidden="true"></div>
+        </div>
+        <p>Elegí la opción que mejor responda a lo que buscás.</p>
       </div>
     </div>
   </div>
@@ -1846,6 +1856,9 @@ body.scrolled .top-nav{
       <figure class="marco marco-v">
         <div class="foto"><img src="fotos/album-pileta-gente.jpg" alt="Socios disfrutando de la pileta"></div>
       </figure>
+      <figure class="marco marco-h">
+        <div class="foto"><img src="fotos/album-pileta-panoramica.jpg" alt="Vista panorámica de las piletas del club"></div>
+      </figure>
       <figure class="marco marco-v">
         <div class="foto"><img src="fotos/album-atardecer-sendero.jpg" alt="Sendero de piedra hacia la pileta al atardecer"></div>
       </figure>
@@ -1869,6 +1882,21 @@ body.scrolled .top-nav{
       </figure>
       <figure class="marco marco-h">
         <div class="foto"><img src="fotos/hero-04-juegos.jpg" alt="Plaza de juegos del club"></div>
+      </figure>
+      <figure class="marco marco-h">
+        <div class="foto"><img src="fotos/hero-01-fachada.jpg" alt="Fachada y terraza del club"></div>
+      </figure>
+      <figure class="marco marco-h">
+        <div class="foto"><img src="fotos/hero-05-aerea-campo.jpg" alt="Vista aérea del predio y la pileta"></div>
+      </figure>
+      <figure class="marco marco-h">
+        <div class="foto"><img src="fotos/hero-06-atardecer.jpg" alt="Atardecer en el club"></div>
+      </figure>
+      <figure class="marco marco-h">
+        <div class="foto"><img src="fotos/hero-07-barrio-aereo.jpg" alt="Vista aérea del barrio"></div>
+      </figure>
+      <figure class="marco marco-h">
+        <div class="foto"><img src="fotos/hero-08-pileta-forma.jpg" alt="Vista aérea de la pileta"></div>
       </figure>
     </div>
   </div>
@@ -1961,7 +1989,7 @@ body.scrolled .top-nav{
         </div>
       </div>
     </div>
-    <div class="footer-direccion">Ruta Provincial 105, Km 5, Garupá, Misiones. C.P. 3304</div>
+    <div class="footer-direccion">Club de Campo La Eugenia, Asociación Civil<br>Ruta Provincial 105, Km 5, Garupá, Misiones. C.P. 3304</div>
   </div>
 </footer>
 
@@ -1976,6 +2004,28 @@ body.scrolled .top-nav{
         actual = (actual + 1) % slides.length;
         slides[actual].classList.add('activa');
       }, 6000);
+
+      /* Paneo y zoom continuos, lentos y delicados. Un único reloj global
+         aplicado por igual a todas las fotos, para que nunca haya un salto
+         al cambiar cuál está activa (la que entra ya está en la misma
+         posición que la que sale). */
+      var reducirMovimiento = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if(!reducirMovimiento){
+        var cicloPan = 30000, cicloZoom = 36000;
+        (function tick(t){
+          var fasePan = (t % cicloPan) / cicloPan;
+          var faseZoom = (t % cicloZoom) / cicloZoom;
+          var pan = (Math.sin(fasePan * Math.PI * 2) + 1) / 2;
+          var zoom = (Math.sin(faseZoom * Math.PI * 2) + 1) / 2;
+          var bgY = (36 + pan * 5).toFixed(2);
+          var escala = (1 + zoom * 0.045).toFixed(4);
+          for(var i = 0; i < slides.length; i++){
+            slides[i].style.backgroundPosition = 'center ' + bgY + '%';
+            slides[i].style.transform = 'scale(' + escala + ')';
+          }
+          requestAnimationFrame(tick);
+        })(0);
+      }
     }
 
     /* ── Scroll reveal: textos y tarjetas aparecen al bajar ── */
@@ -2052,10 +2102,10 @@ body.scrolled .top-nav{
 
     if (mapaZoomWrap){
       var mr = mapaZoomWrap.getBoundingClientRect();
-      var centroM = (mr.top + mr.height / 2) - vh / 2;
-      var distMax = vh / 2 + mr.height / 2;
-      var progresoM = distMax > 0 ? 1 - clamp(Math.abs(centroM) / distMax, 0, 1) : 0;
-      var escalaM = 1.4 + progresoM * 0.35;
+      var distanciaTotal = vh + mr.height;
+      var recorrido = vh - mr.top;
+      var progresoM = clamp(recorrido / distanciaTotal, 0, 1);
+      var escalaM = 1.15 + progresoM * 0.55;
       mapaZoomWrap.style.transform = 'scale(' + escalaM.toFixed(3) + ')';
       window.__mapaEscala = escalaM;
     }
