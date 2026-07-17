@@ -2010,22 +2010,23 @@ body.scrolled .top-nav{
          al cambiar cuál está activa (la que entra ya está en la misma
          posición que la que sale). */
       var reducirMovimiento = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if(!reducirMovimiento){
-        var cicloPan = 13000, cicloZoom = 17000;
-        (function tick(t){
-          var fasePan = (t % cicloPan) / cicloPan;
-          var faseZoom = (t % cicloZoom) / cicloZoom;
-          var pan = (Math.sin(fasePan * Math.PI * 2) + 1) / 2;
-          var zoom = (Math.sin(faseZoom * Math.PI * 2) + 1) / 2;
-          var bgY = (35 + pan * 7).toFixed(2);
-          var escala = (1 + zoom * 0.055).toFixed(4);
-          for(var i = 0; i < slides.length; i++){
-            slides[i].style.backgroundPosition = 'center ' + bgY + '%';
-            slides[i].style.transform = 'scale(' + escala + ')';
-          }
-          requestAnimationFrame(tick);
-        })(0);
-      }
+      var cicloPan = reducirMovimiento ? 26000 : 13000;
+      var cicloZoom = reducirMovimiento ? 34000 : 17000;
+      var rangoPan = reducirMovimiento ? 2 : 7;
+      var rangoZoom = reducirMovimiento ? 0.015 : 0.055;
+      (function tick(t){
+        var fasePan = (t % cicloPan) / cicloPan;
+        var faseZoom = (t % cicloZoom) / cicloZoom;
+        var pan = (Math.sin(fasePan * Math.PI * 2) + 1) / 2;
+        var zoom = (Math.sin(faseZoom * Math.PI * 2) + 1) / 2;
+        var bgY = (35 + pan * rangoPan).toFixed(2);
+        var escala = (1 + zoom * rangoZoom).toFixed(4);
+        for(var i = 0; i < slides.length; i++){
+          slides[i].style.backgroundPosition = 'center ' + bgY + '%';
+          slides[i].style.transform = 'scale(' + escala + ')';
+        }
+        requestAnimationFrame(tick);
+      })(0);
     }
 
     /* ── Scroll reveal: textos y tarjetas aparecen al bajar ── */
