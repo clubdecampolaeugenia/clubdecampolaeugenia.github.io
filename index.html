@@ -2011,14 +2011,14 @@ body.scrolled .top-nav{
          posición que la que sale). */
       var reducirMovimiento = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if(!reducirMovimiento){
-        var cicloPan = 30000, cicloZoom = 36000;
+        var cicloPan = 13000, cicloZoom = 17000;
         (function tick(t){
           var fasePan = (t % cicloPan) / cicloPan;
           var faseZoom = (t % cicloZoom) / cicloZoom;
           var pan = (Math.sin(fasePan * Math.PI * 2) + 1) / 2;
           var zoom = (Math.sin(faseZoom * Math.PI * 2) + 1) / 2;
-          var bgY = (36 + pan * 5).toFixed(2);
-          var escala = (1 + zoom * 0.045).toFixed(4);
+          var bgY = (35 + pan * 7).toFixed(2);
+          var escala = (1 + zoom * 0.055).toFixed(4);
           for(var i = 0; i < slides.length; i++){
             slides[i].style.backgroundPosition = 'center ' + bgY + '%';
             slides[i].style.transform = 'scale(' + escala + ')';
