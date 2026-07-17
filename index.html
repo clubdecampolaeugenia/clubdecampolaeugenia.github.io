@@ -274,11 +274,11 @@
   .hero-slide.activa{
     opacity:1;
     will-change:opacity, transform, background-position;
-    animation: kenburns 9s ease-in-out infinite alternate;
+    animation: kenburns 7s ease-in-out infinite alternate;
   }
   @keyframes kenburns{
-    from{transform:translateZ(0) scale(1); background-position:center 34%;}
-    to{transform:translateZ(0) scale(1.08); background-position:center 44%;}
+    from{transform:translateZ(0) scale(1); background-position:left 28%;}
+    to{transform:translateZ(0) scale(1.14); background-position:right 48%;}
   }
   .hero-content{position:relative; z-index:2; max-width:640px; text-shadow:0 1px 18px rgba(9,26,26,0.28);}
   .hero h1{
@@ -320,8 +320,8 @@
   }
   .hero-acento{display:flex; justify-content:center; gap:5px; margin-top:22px;}
   .hero-acento span{display:block; width:48px; height:2px;}
-  .hero-acento span:first-child{background:var(--naranja);}
-  .hero-acento span:last-child{background:var(--verdecl);}
+  .hero-acento span:first-child{background:#d87c1f;}
+  .hero-acento span:last-child{background:#04773f;}
 
 
   .chevrones{
@@ -415,7 +415,7 @@
   .visitanos-foto-bg{
     position:absolute;
     inset:-10% -4%;
-    background:url('fotos/hero-06-atardecer.jpg') center 42%/cover no-repeat;
+    background:url('fotos/album-pileta-panoramica.jpg') center 42%/cover no-repeat;
     transform:scale(1.16);
     transform-origin:center center;
     will-change:transform, background-position;
@@ -423,7 +423,7 @@
   .visitanos-foto::before{
     content:"";
     position:absolute; inset:0; z-index:1;
-    background:linear-gradient(180deg, rgba(9,26,26,.62) 0%, rgba(9,26,26,.34) 45%, rgba(9,26,26,.68) 100%);
+    background:linear-gradient(180deg, rgba(9,26,26,.72) 0%, rgba(9,26,26,.48) 45%, rgba(9,26,26,.76) 100%);
     pointer-events:none;
   }
   .visitanos-foto::after{
@@ -431,7 +431,7 @@
     position:absolute; inset:0; z-index:1;
     background:var(--petroleo);
     mix-blend-mode:multiply;
-    opacity:.22;
+    opacity:.34;
     pointer-events:none;
   }
   .visitanos-foto .wrap{position:relative; z-index:2; width:100%;}
@@ -540,9 +540,22 @@
   .btn-linea:hover, .btn-linea:active{gap:15px; color:var(--naranja); border-color:var(--naranja);}
   .btn-linea .flecha-cta{font-family:'Karla',sans-serif; font-size:15px;}
 
+  /* ── Contenedor que recorta el zoom dentro de su propia franja ── */
+  .mapa-clip{
+    width:100vw;
+    margin-left:calc(50% - 50vw);
+    aspect-ratio:16/8.6;
+    overflow:hidden;
+    position:relative;
+  }
+  @media (max-width:700px){
+    .mapa-clip{aspect-ratio:4/3;}
+  }
+
   /* ── El visor hace zoom in/out de forma continua según la posición de scroll ── */
   .mapa-scroll-zoom{
-    transform:scale(1.08);
+    width:100%; height:100%;
+    transform:scale(1.4);
     will-change:transform;
   }
 
@@ -550,9 +563,8 @@
   .mapa-visor{
     position:relative;
     display:block;
-    width:100vw;
-    margin-left:calc(50% - 50vw);
-    aspect-ratio:16/8.6;
+    width:100%;
+    height:100%;
     background:var(--crema);
     overflow:hidden;
     cursor:pointer;
@@ -568,9 +580,6 @@
     object-position:center;
     user-select:none;
     -webkit-user-drag:none;
-  }
-  @media (max-width:700px){
-    .mapa-visor{aspect-ratio:4/3;}
   }
   .mapa-visor .placeholder{
     position:absolute; inset:0;
@@ -696,22 +705,24 @@
   }
   .marco .foto{
     height:100%;
-    background:linear-gradient(160deg,var(--verdecl),var(--crema));
+    background:var(--hueso);
     display:flex; align-items:center; justify-content:center;
     position:relative;
     overflow:hidden;
   }
-  .marco.marco-h .foto{ aspect-ratio:1.777; }
-  .marco.marco-v .foto{ aspect-ratio:0.563; }
+  .marco.marco-h .foto{ width:675.25px; }
+  .marco.marco-v .foto{ width:213.94px; }
   .marco .foto img{
     position:absolute;
-    left:-12%; top:-12%;
-    width:124%; height:124%;
+    inset:0;
+    width:100%; height:100%;
     object-fit:cover;
     will-change:transform;
   }
   @media(max-width:700px){
     .marco{height:260px;}
+    .marco.marco-h .foto{ width:462.1px; }
+    .marco.marco-v .foto{ width:146.38px; }
   }
   .marco .foto.vacio span{
     font-size:12px;
@@ -853,6 +864,7 @@
   footer .wrap{max-width:1080px;}
   .footer-cabecera{display:grid; grid-template-columns:1.2fr .8fr; gap:56px; align-items:start; padding-bottom:42px; border-bottom:1px solid rgba(245,243,236,.2);}
   .footer-marca .club-de-campo{display:block; font-size:10px; font-weight:600; letter-spacing:.24em; text-transform:uppercase; color:rgba(245,243,236,.66); margin-bottom:6px;}
+  .footer-acento{justify-content:flex-start!important; margin-top:0!important; margin-bottom:14px;}
   .footer-marca .marca{font-family:'ChristieBrand',serif; font-size:clamp(34px,5vw,52px); line-height:1; color:var(--hueso);}
   .footer-marca p{max-width:430px; margin:18px 0 0; color:rgba(245,243,236,.72); line-height:1.65;}
   .footer-contacto{display:grid; gap:10px; font-size:13px; color:rgba(245,243,236,.78);}
@@ -1157,8 +1169,8 @@ body.scrolled .top-nav{
 /* Ajuste final de encabezado y pie */
 .top-nav-inner{justify-content:flex-end;}
 .footer-cabecera{display:grid!important;grid-template-columns:1fr 1fr!important;gap:72px!important;align-items:start!important;padding-bottom:0!important;border-bottom:0!important;}
-.footer-marca .marca{display:block!important;font-family:'ChristieBrand',serif!important;font-size:clamp(38px,5vw,56px)!important;line-height:1!important;color:var(--hueso)!important;}
-.footer-marca .club-de-campo{display:block!important;margin-top:8px!important;margin-bottom:0!important;font-size:10px!important;font-weight:600!important;letter-spacing:.24em!important;text-transform:uppercase!important;color:rgba(245,243,236,.72)!important;}
+.footer-marca .marca{display:block!important;font-family:'ChristieBrand',serif!important;font-size:clamp(38px,5vw,56px)!important;line-height:1!important;color:var(--hueso)!important;margin-top:6px!important;}
+.footer-marca .club-de-campo{display:block!important;margin-top:0!important;margin-bottom:0!important;font-size:10px!important;font-weight:600!important;letter-spacing:.24em!important;text-transform:uppercase!important;color:rgba(245,243,236,.72)!important;}
 .footer-contacto{display:grid!important;grid-template-columns:1fr 1fr!important;gap:22px 36px!important;font-size:13px!important;color:var(--hueso)!important;}
 .footer-contacto .dato{display:grid;gap:5px;}
 .footer-contacto strong{font-size:10px!important;letter-spacing:.16em!important;text-transform:uppercase!important;color:rgba(245,243,236,.72)!important;margin:0!important;}
@@ -1200,10 +1212,9 @@ footer#contacto{scroll-margin-top:24px;}
 /* ══════════════ AVANCE · MOVIMIENTO ESTABLE Y DETALLES ══════════════ */
 .acceso:hover .flecha-cta,.acceso:active .flecha-cta,.acceso:focus-visible .flecha-cta{transform:none!important;opacity:1;}
 
-/* Carrusel: paneo fotográfico continuo, sin escalar capas completas. */
+/* Carrusel: paneo fotográfico continuo. */
 .hero-slide{
-  transform:none!important;
-  will-change:opacity,background-position;
+  will-change:opacity,background-position,transform;
   backface-visibility:visible;
   transition:opacity 1.8s ease!important;
   background-size:cover;
@@ -1760,10 +1771,12 @@ body.scrolled .top-nav{
     </div>
   </div>
 
-  <div class="mapa-scroll-zoom" id="plano" style="scroll-margin-top:32px;">
-    <a class="mapa-visor" id="mapaVisor" href="https://clubdecampolaeugenia.github.io/mapa-la-eugenia/" aria-label="Ir al mapa interactivo del barrio">
-      <img class="mapa-visor-img" id="mapaImg" src="mapa-barrio.jpg" alt="Plano del barrio La Eugenia" loading="lazy">
-    </a>
+  <div class="mapa-clip" style="scroll-margin-top:32px;">
+    <div class="mapa-scroll-zoom" id="plano">
+      <a class="mapa-visor" id="mapaVisor" href="https://clubdecampolaeugenia.github.io/mapa-la-eugenia/" aria-label="Ir al mapa interactivo del barrio">
+        <img class="mapa-visor-img" id="mapaImg" src="mapa-barrio.jpg" alt="Plano del barrio La Eugenia" loading="lazy">
+      </a>
+    </div>
   </div>
 
   <div class="wrap">
@@ -1832,9 +1845,6 @@ body.scrolled .top-nav{
     <div class="album-scroll">
       <figure class="marco marco-v">
         <div class="foto"><img src="fotos/album-pileta-gente.jpg" alt="Socios disfrutando de la pileta"></div>
-      </figure>
-      <figure class="marco marco-h">
-        <div class="foto"><img src="fotos/album-pileta-panoramica.jpg" alt="Vista panorámica de las piletas del club"></div>
       </figure>
       <figure class="marco marco-v">
         <div class="foto"><img src="fotos/album-atardecer-sendero.jpg" alt="Sendero de piedra hacia la pileta al atardecer"></div>
@@ -1932,8 +1942,9 @@ body.scrolled .top-nav{
   <div class="wrap">
     <div class="footer-cabecera">
       <div class="footer-marca">
-        <span class="marca">La Eugenia</span>
+        <div class="hero-acento footer-acento" aria-hidden="true"><span></span><span></span></div>
         <span class="club-de-campo">Club de Campo</span>
+        <span class="marca">La Eugenia</span>
       </div>
       <div class="footer-contacto">
         <div class="dato">
@@ -2024,7 +2035,6 @@ body.scrolled .top-nav{
 
   var visitanosFoto = document.querySelector('.visitanos-foto');
   var visitanosFotoBg = document.querySelector('.visitanos-foto-bg');
-  var albumImgs = document.querySelectorAll('.marco .foto img');
   var mapaZoomWrap = document.querySelector('.mapa-scroll-zoom');
   var ticking = false;
 
@@ -2040,20 +2050,12 @@ body.scrolled .top-nav{
       visitanosFotoBg.style.backgroundPosition = 'center calc(42% + ' + offV + 'px)';
     }
 
-    for (var j = 0; j < albumImgs.length; j++){
-      var img = albumImgs[j];
-      var ar = img.parentElement.getBoundingClientRect();
-      var centroA = (ar.top + ar.height / 2) - vh / 2;
-      var offA = clamp(centroA * -0.09, -26, 26).toFixed(1);
-      img.style.transform = 'translateY(' + offA + 'px)';
-    }
-
     if (mapaZoomWrap){
       var mr = mapaZoomWrap.getBoundingClientRect();
       var centroM = (mr.top + mr.height / 2) - vh / 2;
       var distMax = vh / 2 + mr.height / 2;
       var progresoM = distMax > 0 ? 1 - clamp(Math.abs(centroM) / distMax, 0, 1) : 0;
-      var escalaM = 1.08 + progresoM * 0.1;
+      var escalaM = 1.4 + progresoM * 0.35;
       mapaZoomWrap.style.transform = 'scale(' + escalaM.toFixed(3) + ')';
       window.__mapaEscala = escalaM;
     }
