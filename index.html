@@ -1226,7 +1226,19 @@ body.scrolled .top-nav{
 .footer-marca .marca{display:block!important;font-family:'ChristieBrand',serif!important;font-size:clamp(38px,5vw,56px)!important;line-height:1!important;color:var(--hueso)!important;margin-top:6px!important;}
 .footer-marca .club-de-campo{display:block!important;margin-top:0!important;margin-bottom:0!important;font-size:10px!important;font-weight:600!important;letter-spacing:.24em!important;text-transform:uppercase!important;color:rgba(245,243,236,.72)!important;}
 .footer-contacto{display:grid!important;grid-template-columns:1fr 1fr!important;gap:22px 36px!important;font-size:13px!important;color:var(--hueso)!important;}
-.footer-contacto .dato{display:grid;gap:5px;}
+.footer-contacto .dato{display:flex;align-items:center;gap:12px;}
+.dato-icono{
+  flex:0 0 auto;
+  width:34px; height:34px;
+  display:flex; align-items:center; justify-content:center;
+  border-radius:50%;
+  border:1px solid rgba(245,243,236,.32);
+  color:rgba(245,243,236,.85);
+  transition:border-color .3s ease, color .3s ease, background-color .3s ease;
+}
+.dato-icono svg{width:16px; height:16px;}
+.dato:hover .dato-icono{border-color:var(--naranja);color:var(--naranja);background-color:rgba(222,175,77,.1);}
+.dato-texto{display:grid;gap:5px;}
 .footer-contacto strong{font-size:10px!important;letter-spacing:.16em!important;text-transform:uppercase!important;color:rgba(245,243,236,.72)!important;margin:0!important;}
 .footer-contacto a{color:var(--hueso)!important;text-decoration:none!important;width:auto!important;border-bottom:1px solid transparent!important;line-height:1.5;transition:color .25s ease, border-color .25s ease;}
 .footer-contacto a:hover,.footer-contacto a:focus-visible{color:var(--naranja)!important;border-color:var(--naranja)!important;}
@@ -2059,20 +2071,32 @@ body.scrolled .top-nav{
       </div>
       <div class="footer-contacto">
         <div class="dato">
-          <strong>WhatsApp</strong>
-          <a href="https://wa.me/5493764113300" target="_blank" rel="noopener noreferrer">+54 9 3764 11-3300</a>
+          <span class="dato-icono" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>
+          <div class="dato-texto">
+            <strong>WhatsApp</strong>
+            <a href="https://wa.me/5493764113300" target="_blank" rel="noopener noreferrer">+54 9 3764 11-3300</a>
+          </div>
         </div>
         <div class="dato">
-          <strong>Garita de Seguridad</strong>
-          <a href="tel:+5491161888188">+54 9 11 6188-8188</a>
+          <span class="dato-icono" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+          <div class="dato-texto">
+            <strong>Garita de Seguridad</strong>
+            <a href="tel:+5491161888188">+54 9 11 6188-8188</a>
+          </div>
         </div>
         <div class="dato">
-          <strong>Email</strong>
-          <a href="mailto:clubdecampolaeugenia@gmail.com">clubdecampolaeugenia@gmail.com</a>
+          <span class="dato-icono" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22 6 12 13 2 6"/></svg></span>
+          <div class="dato-texto">
+            <strong>Email</strong>
+            <a href="mailto:clubdecampolaeugenia@gmail.com">clubdecampolaeugenia@gmail.com</a>
+          </div>
         </div>
         <div class="dato">
-          <strong>Instagram</strong>
-          <a href="https://www.instagram.com/laeugeniaclub" target="_blank" rel="noopener noreferrer">@laeugeniaclub</a>
+          <span class="dato-icono" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></span>
+          <div class="dato-texto">
+            <strong>Instagram</strong>
+            <a href="https://www.instagram.com/laeugeniaclub" target="_blank" rel="noopener noreferrer">@laeugeniaclub</a>
+          </div>
         </div>
       </div>
     </div>
