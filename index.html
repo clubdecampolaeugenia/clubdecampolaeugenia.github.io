@@ -2036,11 +2036,11 @@ body.scrolled .top-nav{
          al cambiar cuál está activa (la que entra ya está en la misma
          posición que la que sale). */
       var reducirMovimiento = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      var cicloPan = reducirMovimiento ? 22000 : 9500;
-      var cicloZoom = reducirMovimiento ? 30000 : 13000;
-      var rangoPan = reducirMovimiento ? 2 : 20;
-      var rangoPanX = reducirMovimiento ? 1 : 10;
-      var rangoZoom = reducirMovimiento ? 0.015 : 0.14;
+      var cicloPan = reducirMovimiento ? 22000 : 7000;
+      var cicloZoom = reducirMovimiento ? 30000 : 9500;
+      var rangoPan = reducirMovimiento ? 2 : 32;
+      var rangoPanX = reducirMovimiento ? 1 : 18;
+      var rangoZoom = reducirMovimiento ? 0.015 : 0.26;
       (function tick(t){
         var fasePan = (t % cicloPan) / cicloPan;
         var faseZoom = (t % cicloZoom) / cicloZoom;
