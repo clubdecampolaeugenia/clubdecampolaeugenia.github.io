@@ -2038,17 +2038,20 @@ body.scrolled .top-nav{
       var reducirMovimiento = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       var cicloPan = reducirMovimiento ? 22000 : 9500;
       var cicloZoom = reducirMovimiento ? 30000 : 13000;
-      var rangoPan = reducirMovimiento ? 2 : 10;
-      var rangoZoom = reducirMovimiento ? 0.015 : 0.07;
+      var rangoPan = reducirMovimiento ? 2 : 20;
+      var rangoPanX = reducirMovimiento ? 1 : 10;
+      var rangoZoom = reducirMovimiento ? 0.015 : 0.14;
       (function tick(t){
         var fasePan = (t % cicloPan) / cicloPan;
         var faseZoom = (t % cicloZoom) / cicloZoom;
         var pan = (Math.sin(fasePan * Math.PI * 2) + 1) / 2;
+        var panX = (Math.sin(fasePan * Math.PI * 2 + 1.1) + 1) / 2;
         var zoom = (Math.sin(faseZoom * Math.PI * 2) + 1) / 2;
         var bgY = (35 + pan * rangoPan).toFixed(2);
+        var bgX = (50 + (panX - 0.5) * rangoPanX).toFixed(2);
         var escala = (1 + zoom * rangoZoom).toFixed(4);
         for(var i = 0; i < slides.length; i++){
-          slides[i].style.backgroundPosition = 'center ' + bgY + '%';
+          slides[i].style.backgroundPosition = bgX + '% ' + bgY + '%';
           slides[i].style.transform = 'scale(' + escala + ')';
         }
         requestAnimationFrame(tick);
