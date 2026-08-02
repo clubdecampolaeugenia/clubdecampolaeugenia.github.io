@@ -1256,34 +1256,37 @@ footer#contacto{scroll-margin-top:24px;}
   color:var(--tinta)!important;
 }
 
-/* Carrusel: paneo fotográfico continuo. */
+/* Carrusel: cada foto hace UN recorrido único y centrado mientras está
+   visible (sin ir y volver). Se reinicia con JS cada vez que la foto
+   vuelve a aparecer, para que el movimiento sea siempre el mismo. */
 .hero-slide{
   will-change:opacity,background-position,transform;
   backface-visibility:visible;
   transition:opacity 1.8s ease!important;
   background-size:cover;
   animation-timing-function:ease-in-out;
-  animation-iteration-count:infinite;
+  animation-iteration-count:1;
+  animation-fill-mode:both;
 }
 /* Cada foto tiene su propio movimiento, para que no se sientan sincronizadas. */
-.hero-slide:nth-child(1){ animation-name:kb-acercamiento; animation-duration:20s; }
-.hero-slide:nth-child(2){ animation-name:kb-paneo-izq-der; animation-duration:58s; }
-.hero-slide:nth-child(3){ animation-name:kb-paneo-der-izq; animation-duration:62s; }
-.hero-slide:nth-child(4){ animation-name:kb-paneo-izq-der; animation-duration:55s; }
+.hero-slide:nth-child(1){ animation-name:kb-acercamiento; animation-duration:9s; }
+.hero-slide:nth-child(2){ animation-name:kb-paneo-izq-der; animation-duration:9s; }
+.hero-slide:nth-child(3){ animation-name:kb-paneo-der-izq; animation-duration:9s; }
+.hero-slide:nth-child(4){ animation-name:kb-paneo-izq-der; animation-duration:9s; }
 
+/* Acercamiento: centrado, un solo sentido (nunca vuelve). */
 @keyframes kb-acercamiento{
-  0%,100%{background-position:center 40%; transform:scale(1.02);}
-  50%{background-position:center 42%; transform:scale(1.30);}
+  0%{background-position:center 40%; transform:scale(1.0);}
+  100%{background-position:center 42%; transform:scale(1.16);}
 }
+/* Paneos: recorrido corto y centrado horizontalmente, un solo sentido. */
 @keyframes kb-paneo-izq-der{
-  0%{background-position:8% 38%; transform:scale(1.14);}
-  50%{background-position:92% 38%; transform:scale(1.14);}
-  100%{background-position:8% 38%; transform:scale(1.14);}
+  0%{background-position:43% 38%; transform:scale(1.08);}
+  100%{background-position:57% 38%; transform:scale(1.08);}
 }
 @keyframes kb-paneo-der-izq{
-  0%{background-position:92% 38%; transform:scale(1.14);}
-  50%{background-position:8% 38%; transform:scale(1.14);}
-  100%{background-position:92% 38%; transform:scale(1.14);}
+  0%{background-position:57% 38%; transform:scale(1.08);}
+  100%{background-position:43% 38%; transform:scale(1.08);}
 }
 @media(prefers-reduced-motion:reduce){
   .hero-slide{animation:none!important;}
@@ -2062,15 +2065,21 @@ body.scrolled .top-nav{
     var heroTexto = document.querySelector('.hero-content');
     if(slides.length > 1){
       var actual = 0;
+      function reiniciarRecorrido(el){
+        el.style.animation = 'none';
+        void el.offsetWidth; /* fuerza reflow para que el reinicio se note */
+        el.style.animation = '';
+      }
       setInterval(function(){
         slides[actual].classList.remove('activa');
         actual = (actual + 1) % slides.length;
         slides[actual].classList.add('activa');
+        reiniciarRecorrido(slides[actual]);
         if(heroTexto){
           heroTexto.classList.add('respirando');
           setTimeout(function(){ heroTexto.classList.remove('respirando'); }, 900);
         }
-      }, 6000);
+      }, 9000);
 
       /* El paneo y zoom de cada foto ahora se maneja con animaciones CSS
          individuales (una por foto, ver .hero-slide:nth-child en el <style>),
