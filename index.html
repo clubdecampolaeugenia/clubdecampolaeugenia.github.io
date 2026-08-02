@@ -1246,6 +1246,35 @@ footer#contacto{scroll-margin-top:24px;}
   backface-visibility:visible;
   transition:opacity 1.8s ease!important;
   background-size:cover;
+  animation-timing-function:ease-in-out;
+  animation-iteration-count:infinite;
+}
+/* Cada foto tiene su propio movimiento, para que no se sientan sincronizadas. */
+.hero-slide:nth-child(1){ animation-name:kb-paneo-horizontal; animation-duration:22s; }
+.hero-slide:nth-child(2){ animation-name:kb-acercamiento; animation-duration:19s; }
+.hero-slide:nth-child(3){ animation-name:kb-paneo-vertical; animation-duration:24s; }
+.hero-slide:nth-child(4){ animation-name:kb-paneo-diagonal; animation-duration:21s; }
+
+@keyframes kb-paneo-horizontal{
+  0%{background-position:12% 38%; transform:scale(1.10);}
+  50%{background-position:88% 38%; transform:scale(1.16);}
+  100%{background-position:12% 38%; transform:scale(1.10);}
+}
+@keyframes kb-acercamiento{
+  0%,100%{background-position:center 40%; transform:scale(1.03);}
+  50%{background-position:center 44%; transform:scale(1.24);}
+}
+@keyframes kb-paneo-vertical{
+  0%,100%{background-position:center 22%; transform:scale(1.12);}
+  50%{background-position:center 54%; transform:scale(1.18);}
+}
+@keyframes kb-paneo-diagonal{
+  0%{background-position:18% 28%; transform:scale(1.08);}
+  50%{background-position:80% 50%; transform:scale(1.20);}
+  100%{background-position:18% 28%; transform:scale(1.08);}
+}
+@media(prefers-reduced-motion:reduce){
+  .hero-slide{animation:none!important;}
 }
 
 /* Sello del hero centrado sobre el indicador de scroll. */
@@ -2031,31 +2060,10 @@ body.scrolled .top-nav{
         }
       }, 6000);
 
-      /* Paneo y zoom continuos, lentos y delicados. Un único reloj global
-         aplicado por igual a todas las fotos, para que nunca haya un salto
-         al cambiar cuál está activa (la que entra ya está en la misma
-         posición que la que sale). */
-      var reducirMovimiento = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      var cicloPan = reducirMovimiento ? 22000 : 7000;
-      var cicloZoom = reducirMovimiento ? 30000 : 9500;
-      var rangoPan = reducirMovimiento ? 2 : 32;
-      var rangoPanX = reducirMovimiento ? 1 : 18;
-      var rangoZoom = reducirMovimiento ? 0.015 : 0.26;
-      (function tick(t){
-        var fasePan = (t % cicloPan) / cicloPan;
-        var faseZoom = (t % cicloZoom) / cicloZoom;
-        var pan = (Math.sin(fasePan * Math.PI * 2) + 1) / 2;
-        var panX = (Math.sin(fasePan * Math.PI * 2 + 1.1) + 1) / 2;
-        var zoom = (Math.sin(faseZoom * Math.PI * 2) + 1) / 2;
-        var bgY = (35 + pan * rangoPan).toFixed(2);
-        var bgX = (50 + (panX - 0.5) * rangoPanX).toFixed(2);
-        var escala = (1 + zoom * rangoZoom).toFixed(4);
-        for(var i = 0; i < slides.length; i++){
-          slides[i].style.backgroundPosition = bgX + '% ' + bgY + '%';
-          slides[i].style.transform = 'scale(' + escala + ')';
-        }
-        requestAnimationFrame(tick);
-      })(0);
+      /* El paneo y zoom de cada foto ahora se maneja con animaciones CSS
+         individuales (una por foto, ver .hero-slide:nth-child en el <style>),
+         para que cada una tenga su propio movimiento en vez de un único
+         reloj sincronizado igual para las 4. */
     }
 
     /* ── Scroll reveal: textos y tarjetas aparecen al bajar ── */
