@@ -575,6 +575,12 @@
   @media (max-width:700px){
     .mapa-clip{aspect-ratio:4/3;}
   }
+  /* En monitores muy anchos, la imagen (1800px reales) se pixela si se
+     estira de punta a punta con el zoom aplicado — se limita el ancho
+     efectivo para que nunca supere demasiado su resolución nativa. */
+  @media (min-width:1700px){
+    .mapa-clip{ max-width:1500px; width:100%; margin-left:auto; margin-right:auto; }
+  }
 
   /* ── El visor hace zoom in/out de forma continua según la posición de scroll ── */
   .mapa-scroll-zoom{
@@ -2231,7 +2237,7 @@ body.scrolled .top-nav{
       var distanciaTotal = vh + mr.height;
       var recorrido = vh - mr.top;
       var progresoM = clamp(recorrido / distanciaTotal, 0, 1);
-      var escalaM = 1.15 + progresoM * 0.55;
+      var escalaM = 1.15 + progresoM * 0.20;
       mapaZoomWrap.style.transform = 'scale(' + escalaM.toFixed(3) + ')';
       window.__mapaEscala = escalaM;
     }
