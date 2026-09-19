@@ -1867,7 +1867,7 @@ body.scrolled .top-nav{
 }
 .descubrimiento__foto{
   position:absolute; z-index:1;
-  top:-18vh; bottom:0; right:0; width:58%;
+  top:-18vh; bottom:0; right:0; width:48%;
   overflow:hidden;
   border-top-left-radius:var(--r-lg); border-bottom-left-radius:var(--r-lg);
   box-shadow:var(--shadow-2);
@@ -2091,23 +2091,25 @@ body.scrolled .top-nav{
 
 <style id="etapa7-plano">
 /* ═══════════════════════════════════════════════════════════════════
-   ETAPA 7B — PLANO DEL BARRIO: escala y presencia real
-   La lámina se saca del flujo de grilla y se posiciona como objeto
-   independiente, dominando el sector derecho, con el crop necesario
-   para que el DIBUJO ÚTIL (no el margen del asset) llene el objeto.
+   ETAPA 7C — PLANO DEL BARRIO: recomposición desktop
+   La lámina pasa a ser un hermano real de flujo (flex), no un objeto
+   position:absolute centrado mediante top:50%. Esto elimina el vacío
+   arbitrario y la desconexión entre texto y plano: ambos son parte de
+   la misma fila, se acercan espacialmente y el alto de la sección lo
+   determina el contenido real, no un min-height inventado.
    ═══════════════════════════════════════════════════════════════════ */
 
 .plano{
   position:relative; background:var(--petroleo); overflow:hidden;
-  min-height:720px; display:flex; align-items:center;
-  padding:var(--sp-2xl) 0;
+  padding:88px 0 96px;
 }
 .plano__grid{
   position:relative; z-index:2;
-  width:min(1400px, calc(100% - 48px)); margin:0 auto;
+  width:min(1620px, calc(100% - 48px)); margin:0 auto;
+  display:flex; align-items:center; gap:40px;
 }
 .plano__texto{
-  position:relative; max-width:380px;
+  position:relative; flex:0 0 320px;
 }
 .plano__eyebrow{
   display:block; font-family:'Karla',sans-serif; font-weight:600; font-size:11px;
@@ -2134,33 +2136,33 @@ body.scrolled .top-nav{
 .plano__cta span{ transition:transform var(--dur-fast) var(--ease-motion); display:inline-block; }
 .plano__cta:hover span, .plano__cta:focus-visible span{ transform:translateX(4px); }
 
-/* La lámina: objeto independiente del texto, dominando el sector
-   derecho. Se recorta sobre el DIBUJO real del barrio (el asset trae
-   ~42% de margen oscuro incorporado que no debe determinar la escala
-   visual) mediante un zoom moderado sobre la imagen, sin tocar el
-   archivo original. Radio reducido y gran escala para que se lea como
-   objeto que emerge, no como card contenedora. */
+/* La lámina: ahora es flex:1, ocupa todo el ancho restante (~65-70%
+   real según el asset) y sangra un poco más hacia la derecha y hacia
+   abajo, saliendo parcialmente del grid — sin recortar la geometría
+   del barrio, que es lo que debe leerse de inmediato. */
 .plano__lamina{
-  position:absolute; z-index:1; top:50%; right:clamp(-64px, -4vw, -20px);
-  width:min(1120px, 66vw); aspect-ratio:16/11;
+  position:relative; z-index:1; flex:1 1 auto; align-self:center;
+  margin-right:clamp(-40px, -3vw, -10px); margin-left:-16px;
+  aspect-ratio:16/10;
   border-radius:var(--r-md); overflow:hidden;
   box-shadow:0 30px 70px -22px rgba(0,0,0,.55), 0 80px 150px -55px rgba(0,0,0,.65);
-  opacity:0; transform:translateY(calc(-50% + 26px)) scale(.975);
+  opacity:0; transform:translateY(22px) scale(.978);
   transition:opacity 700ms var(--ease-motion), transform 700ms var(--ease-motion), box-shadow 700ms var(--ease-motion);
 }
-.plano__lamina.is-visible{ opacity:1; transform:translateY(-50%) scale(1); }
+.plano__lamina.is-visible{ opacity:1; transform:translateY(0) scale(1); }
 .plano__lamina img{
   display:block; width:100%; height:100%; object-fit:cover; object-position:49% 51%;
-  transform:scale(1.62); transform-origin:49% 51%;
+  transform:scale(1.42); transform-origin:49% 51%;
   pointer-events:none; /* la imagen es información gráfica, no un control */
 }
 
 @media(max-width:1080px){
-  .plano{ min-height:0; display:block; padding:var(--sp-2xl) 0 var(--sp-xl); }
-  .plano__grid{ display:flex; flex-direction:column; gap:var(--sp-lg); }
+  .plano{ padding:var(--sp-2xl) 0 var(--sp-xl); }
+  .plano__grid{ display:flex; flex-direction:column; align-items:stretch; gap:var(--sp-lg); }
+  .plano__texto{ flex:none; }
   .plano__lamina{
-    position:relative; top:auto; right:auto; z-index:1;
-    width:100vw; margin-left:calc(50% - 50vw); margin-right:calc(50% - 50vw);
+    flex:none; margin-left:0;
+    width:100vw; margin-right:calc(50% - 50vw); margin-left:calc(50% - 50vw);
     aspect-ratio:16/11; border-radius:0;
     transform:translateY(26px) scale(.975);
   }
@@ -2301,7 +2303,7 @@ body.scrolled .top-nav{
    Sin animación propia del número — la composición es el impacto.
    ═══════════════════════════════════════════════════════════════════ */
 
-.historia{ background:var(--hueso); overflow:hidden; }
+.historia{ background:var(--hueso); overflow:hidden; padding:0; }
 
 .historia__foto{
   position:relative; overflow:hidden;
@@ -2319,7 +2321,7 @@ body.scrolled .top-nav{
 }
 .historia__anio{
   position:absolute; z-index:2;
-  right:clamp(-34px, -2.6vw, 0px); bottom:clamp(-48px, -4vw, -16px);
+  right:clamp(50px, 6vw, 130px); bottom:clamp(-48px, -4vw, -16px);
   font-family:'Fraunces',serif; font-weight:460; color:var(--hueso);
   font-size:clamp(9rem, 2.4rem + 21vw, 19.5rem);
   line-height:0.78; letter-spacing:-0.01em;
@@ -2343,7 +2345,7 @@ body.scrolled .top-nav{
   .historia__foto{ height:auto; aspect-ratio:4/5; min-height:0; max-height:none; }
   .historia__anio{
     font-size:clamp(6.5rem, 1.5rem + 27vw, 12rem);
-    right:clamp(-18px, -4vw, 0px); bottom:clamp(-32px, -6vw, -10px);
+    right:clamp(-14px, -2vw, -4px); bottom:clamp(-32px, -6vw, -10px);
   }
   .historia__relato-inner{ width:100%; margin:0; padding:0 22px; }
 }
@@ -2537,7 +2539,7 @@ body.scrolled .top-nav{
       <p class="descubrimiento__parrafo">La biodiversidad, los espacios verdes, las instalaciones del club y una comunidad comprometida crean un ambiente donde el encuentro, el aire libre y el respeto por la naturaleza forman parte de la vida cotidiana.</p>
     </div>
     <div class="descubrimiento__foto" aria-hidden="true">
-      <img src="fotos/album-entrada-pinos.jpg" alt="" loading="lazy">
+      <img src="fotos/hero-06-atardecer.jpg" alt="" loading="lazy">
     </div>
   </div>
 </section>
