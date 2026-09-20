@@ -1673,6 +1673,12 @@ body.scrolled .top-nav{
   content:""; position:absolute; inset:0; background:var(--petroleo);
   mix-blend-mode:multiply; opacity:.14; pointer-events:none;
 }
+/* Piezas con fotografía: solo la foto reacciona al hover — la tarjeta,
+   el texto y el ícono/flecha quedan estáticos. El lift genérico de
+   .accion (translateY) se ve distinto según el tamaño de cada pieza y
+   sumado al zoom de la foto se percibía como una deformación. */
+.accion--explorar:hover, .accion--explorar:focus-visible{ transform:none; }
+.accion--explorar:hover .accion__flecha, .accion--explorar:focus-visible .accion__flecha{ transform:none; }
 .accion--explorar:hover .accion__foto, .accion--explorar:focus-visible .accion__foto{ transform:scale(1.045); }
 .accion--explorar .accion__contenido{ position:relative; z-index:1; flex:0 0 auto; }
 .accion--explorar .accion__eyebrow{ color:var(--naranja); }
@@ -2146,6 +2152,7 @@ body.scrolled .top-nav{
   height:clamp(200px, 15vw, 280px);
 }
 .inst__pieza--celebrar img{ object-position:center center; }
+.inst__pieza--celebrar:hover img{ transform:scale(1.025); }
 
 /* Revelado único y suave — sin stagger por instalación */
 .inst__grid{ opacity:0; transform:translateY(20px); transition:opacity 680ms var(--ease-motion), transform 680ms var(--ease-motion); }
@@ -2777,7 +2784,7 @@ body.scrolled .top-nav{
       <span class="inst__marquesina-item"><span>PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS ·</span><span>PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS ·</span><span>PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS ·</span><span>PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS ·</span><span>PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS ·</span></span>
       <span class="inst__marquesina-item"><span>PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS ·</span><span>PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS ·</span><span>PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS ·</span><span>PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS ·</span><span>PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS ·</span></span>
     </div>
-    <p class="inst__marquesina-static">PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS ·</p>
+    <p class="inst__marquesina-static">PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS · PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS · PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS · PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS · PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS · PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS ·</p>
   </div>
 
   <div class="inst__grid">
