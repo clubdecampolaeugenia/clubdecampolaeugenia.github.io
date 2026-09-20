@@ -41,7 +41,7 @@
     --hueso:#f5f3ec;
     --gris:#48797c;
     --tinta:#173534;
-    --crema:#efe9dc;
+    --blanco:#ffffff;
     --ease-suave:cubic-bezier(0.16,1,0.3,1);
     --ease-salida:cubic-bezier(0.4,0,0.2,1);
 
@@ -58,7 +58,7 @@
     --shadow-2:0 30px 70px -20px rgba(9,26,26,.38), 0 10px 26px -10px rgba(9,26,26,.22);
 
     /* Glass: dos variantes, sin JS por defecto */
-    --glass-light-bg:rgba(245,243,236,.72);
+    --glass-light-bg:rgba(245,243,236,.85);
     --glass-light-border:rgba(19,84,87,.18);
     --glass-dark-bg:rgba(19,84,87,.30);
     --glass-dark-border:rgba(245,243,236,.28);
@@ -246,8 +246,8 @@
   }
   .hero-acento{display:flex; justify-content:center; gap:5px; margin-top:22px;}
   .hero-acento span{display:block; width:48px; height:2px;}
-  .hero-acento span:first-child{background:#d87c1f;}
-  .hero-acento span:last-child{background:#04773f;}
+  .hero-acento span:first-child{background:var(--naranja);}
+  .hero-acento span:last-child{background:var(--lima);}
 
 
   .chevrones{
@@ -418,7 +418,7 @@
     display:block;
     width:100%;
     height:100%;
-    background:var(--crema);
+    background:var(--hueso);
     overflow:hidden;
     cursor:pointer;
     text-decoration:none;
@@ -446,7 +446,7 @@
 
 
   /* ══════════════ ÁLBUM ══════════════ */
-  .album{overflow:hidden; background:var(--crema);}
+  .album{overflow:hidden; background:var(--hueso);}
   .album .wrap{max-width:1200px;}
   .album-header{text-align:center; margin-bottom:56px;}
   .album-header h2{font-size:clamp(26px,3.6vw,34px); color:var(--petroleo);}
@@ -541,7 +541,7 @@
   .mapa-nota{margin-top:16px; font-size:13px; color:var(--gris); text-align:center;}
 
   /* ══════════════ CONTACTO ══════════════ */
-  #contacto{background:var(--crema);}
+  #contacto{background:var(--hueso);}
   .contacto .wrap{text-align:center; max-width:520px;}
   .contacto h2{font-size:clamp(24px,3.4vw,30px); color:var(--petroleo); margin-bottom:18px;}
   .contacto p.pre{color:var(--gris); margin-bottom:40px;}
@@ -634,6 +634,7 @@
     pointer-events:auto;
   }
   .wsp-fab{
+    position:relative;
     width:50px; height:50px;
     border-radius:50%;
     border:none;
@@ -1292,11 +1293,11 @@ body.scrolled .top-nav{
    superficie, permanece igual sin importar cuánto o hacia dónde se
    scrollee. */
 .site-header[data-state="visible"] .site-header__bar{
-  background:var(--glass-light-bg);
+  background:rgba(255,255,255,.95);
   backdrop-filter:blur(10px) saturate(130%);
   -webkit-backdrop-filter:blur(10px) saturate(130%);
-  border-color:var(--glass-light-border);
-  box-shadow:var(--shadow-1);
+  border-color:transparent;
+  box-shadow:0 8px 22px -10px rgba(9,26,26,.22), 0 2px 6px -2px rgba(9,26,26,.12);
 }
 .site-header[data-state="visible"] .site-header__links a:not(.site-header__cta),
 .site-header[data-state="visible"] .site-header__toggle{ color:var(--petroleo); }
@@ -1420,7 +1421,7 @@ body.scrolled .top-nav{
 /* ── DESCUBRIMIENTO — continuidad real con el Hero: la fotografía emerge
    por debajo de la vista aérea (el Hero ya tiene overflow:visible). ── */
 .descubrimiento{
-  position:relative; background:var(--crema); overflow:visible;
+  position:relative; background:var(--hueso); overflow:visible;
   padding:132px 0 var(--sp-2xl);
 }
 .descubrimiento__grid{
@@ -1458,7 +1459,7 @@ body.scrolled .top-nav{
   /* Respaldo visual: si la imagen no carga (asset faltante/ruta rota),
      la superficie sigue leyéndose como una pieza deliberada, no como
      un hueco roto. */
-  background:linear-gradient(135deg, var(--verdecl) 0%, var(--crema) 100%);
+  background:linear-gradient(135deg, var(--verdecl) 0%, var(--hueso) 100%);
 }
 .descubrimiento__foto img{
   width:100%; height:100%; object-fit:cover; display:block;
@@ -1502,8 +1503,11 @@ body.scrolled .top-nav{
 .wsp-popup{
   border-radius:var(--r-lg)!important;
   box-shadow:var(--shadow-1)!important;
-  background:var(--glass-light-bg)!important;
-  border-color:var(--glass-light-border)!important;
+  /* Tinte verdecl muy sutil (mezcla ~80% hueso / 20% verdecl) — EugenIA
+     pertenece al ecosistema de apps, donde verdecl es superficie de
+     card. Sigue siendo glass: mismo blur/translucidez que el resto. */
+  background:rgba(234,237,225,.85)!important;
+  border-color:rgba(19,84,87,.2)!important;
 }
 </style>
 
@@ -1534,6 +1538,16 @@ body.scrolled .top-nav{
 .acciones__par{ grid-column:2; grid-row:2; display:flex; gap:var(--sp-md); }
 .acciones__par .accion{ flex:1; }
 
+/* Protección de contraste mínima para contenido claro sobre fotografía
+   — reutilizable en cualquier lugar del sistema donde texto/íconos
+   blancos dependan de la luminosidad puntual de la imagen debajo, en
+   vez de un scrim dedicado. Deliberadamente casi imperceptible: solo
+   busca legibilidad, no un efecto de sombra visible. */
+.proteccion-sobre-foto{
+  text-shadow:0 1px 3px rgba(9,26,26,.5);
+  filter:drop-shadow(0 1px 2px rgba(9,26,26,.35));
+}
+
 /* ── Tile base (Eugenia / Cómo llegar / Mapa) ── */
 .accion{
   position:relative; display:flex; flex-direction:column;
@@ -1546,31 +1560,41 @@ body.scrolled .top-nav{
 .accion:active{ transform:translateY(-1px) scale(.99); }
 .accion__contenido{ flex:1; }
 
-.accion--eugenia{ grid-column:2; grid-row:1; background:var(--crema); }
-.accion--llegar{ background:var(--hueso); border:1px solid rgba(19,84,87,.14); justify-content:center; }
-.accion--mapa{ background:var(--petroleo); }
+.accion--eugenia{ grid-column:2; grid-row:1; background:var(--verdecl); }
+/* La eyebrow/ícono/texto genéricos son naranja/gris — sobre verdecl esa
+   combinación pierde casi todo el contraste (medido: 1.3:1 y 3.1:1,
+   ambos por debajo de lo accesible). Se reemplazan por petróleo, que
+   sobre verdecl da 5.5:1. */
+.accion--eugenia .accion__eyebrow{ color:var(--petroleo); }
+.accion--eugenia .accion__desc{ color:var(--petroleo); }
+.accion--eugenia .accion__flecha{ color:var(--petroleo); }
+.accion--eugenia .accion__icono--sinfondo{ color:var(--petroleo); }
 
-/* Círculos reservados solo para lo que aporta identidad: EugenIA (canal
-   de asistencia) y Mapa (herramienta diferencial). Cómo llegar no lleva
-   ícono — su título ya es autoexplicativo. */
-.accion__icono{
-  width:40px; height:40px; border-radius:50%; flex:0 0 auto;
-  display:flex; align-items:center; justify-content:center;
-  border:1px solid rgba(19,84,87,.2); color:var(--petroleo);
-  margin-bottom:var(--sp-sm);
-  transition:transform var(--dur-fast) var(--ease-motion);
-}
-.accion__icono svg{ width:19px; height:19px; }
-.accion--eugenia .accion__icono{ color:var(--naranja); border-color:rgba(222,175,77,.42); }
-.accion:hover .accion__icono{ transform:scale(1.08); }
+/* ETAPA 8E — Cómo llegar: familia lima (ícono/flecha) + jerarquía
+   hueso para el contenido de lectura (título pleno, descripción
+   secundaria) — no "todo lima", para no volverla una pieza demasiado
+   gráfica. Mapa mantiene petróleo sobre lima, sin cambios de rol. */
+.accion--llegar{ background:var(--petroleo); justify-content:center; }
+.accion--llegar .accion__icono--sinfondo{ color:var(--lima); }
+.accion--llegar .accion__flecha{ color:var(--lima); }
+.accion--llegar .accion__titulo{ color:var(--hueso); }
+.accion--llegar .accion__desc{ color:rgba(245,243,236,.72); }
 
-/* Ícono del Mapa: sin círculo — es una marca, no un botón redundante */
-.accion__icono--plano{
-  width:auto; height:auto; border:none; border-radius:0; margin-bottom:var(--sp-sm);
-  color:var(--hueso); display:inline-flex;
+.accion--mapa{ background:var(--lima); }
+.accion--mapa .accion__icono--sinfondo{ color:var(--petroleo); }
+.accion--mapa .accion__flecha{ color:var(--petroleo); }
+.accion--mapa .accion__titulo{ color:var(--petroleo); font-size:1.35rem; }
+.accion--mapa .accion__desc{ color:rgba(19,84,87,.85); max-width:30ch; }
+
+/* Glyphs sólidos sin contenedor — mismo tratamiento en EugenIA, Cómo
+   llegar y Mapa. Ninguna de las tres lleva círculo: es exactamente la
+   excepción de lenguaje que estamos eliminando. */
+.accion__icono--sinfondo{
+  width:auto; height:auto; margin-bottom:var(--sp-sm);
+  display:inline-flex; transition:transform var(--dur-fast) var(--ease-motion);
 }
-.accion__icono--plano svg{ width:24px; height:24px; }
-.accion:hover .accion__icono--plano{ transform:none; }
+.accion__icono--sinfondo svg{ width:24px; height:24px; }
+.accion:hover .accion__icono--sinfondo{ transform:scale(1.08); }
 
 .accion__eyebrow{
   display:block; font-family:'Karla',sans-serif; font-weight:600; font-size:11px;
@@ -1580,25 +1604,27 @@ body.scrolled .top-nav{
   display:block; font-family:'Fraunces',serif; font-weight:440; font-size:1.22rem; line-height:1.3;
   color:var(--petroleo);
 }
-.accion--mapa .accion__titulo{ color:var(--hueso); font-size:1.35rem; }
 .accion__desc{
   display:block; margin-top:8px; font-family:'Karla',sans-serif; font-size:14px; line-height:1.6;
   color:var(--gris); max-width:32ch;
 }
-.accion--mapa .accion__desc{ color:rgba(245,243,236,.78); max-width:30ch; }
 
-/* Flecha simple inline — reemplaza el círculo repetido. La condición
-   clickable de toda la pieza ya comunica interacción; esta solo refuerza. */
-.accion__flecha-in{
-  display:inline-block; color:var(--naranja); font-weight:600;
+/* Flecha — un único sistema para las cuatro piezas: misma posición
+   (esquina superior derecha, separada del título), mismo tamaño, mismo
+   peso. Solo cambian el glyph (→ continúa en la página / ↗ sale a un
+   destino externo — refleja el target real de cada link) y el color
+   según la superficie de cada pieza. Discreta a propósito: no debe
+   competir con el título. */
+.accion__flecha{
+  position:absolute; z-index:1; top:var(--sp-lg); right:var(--sp-lg);
+  font-family:'Karla',sans-serif; font-weight:600; font-size:17px; line-height:1;
   transition:transform var(--dur-fast) var(--ease-motion);
 }
-.accion--mapa .accion__flecha-in{ color:var(--lima); }
-.accion:hover .accion__flecha-in, .accion:focus-visible .accion__flecha-in{ transform:translateX(4px); }
+.accion:hover .accion__flecha, .accion:focus-visible .accion__flecha{ transform:translate(2px,-2px); }
 
 /* ── Tile fotográfico (Conocé La Eugenia) — protagonista por tamaño.
-   Único lugar donde se conserva la flecha circular: es el tratamiento
-   ya establecido para piezas fotográficas del sistema. ── */
+   Comparte la misma flecha del sistema (→, no ↗: es un ancla interna,
+   no sale de la página) en la misma posición que las otras tres. ── */
 .accion--explorar{
   grid-column:1; grid-row:1/3; min-height:492px;
   display:flex; flex-direction:column; justify-content:flex-end;
@@ -1621,17 +1647,7 @@ body.scrolled .top-nav{
 .accion--explorar .accion__eyebrow{ color:var(--naranja); }
 .accion--explorar .accion__titulo{ color:var(--hueso); font-size:clamp(1.5rem,1.25rem + 1.1vw,2rem); }
 .accion--explorar .accion__desc{ color:rgba(245,243,236,.9); max-width:36ch; }
-.accion--explorar .accion__flecha{
-  position:absolute; z-index:1; top:var(--sp-lg); right:var(--sp-lg);
-  width:38px; height:38px; border-radius:50%;
-  display:flex; align-items:center; justify-content:center;
-  border:1px solid rgba(245,243,236,.42); color:var(--hueso);
-  transition:transform var(--dur-base) var(--ease-motion), background var(--dur-fast) var(--ease-motion), border-color var(--dur-fast) var(--ease-motion), color var(--dur-fast) var(--ease-motion);
-}
-.accion--explorar .accion__flecha svg{ width:16px; height:16px; }
-.accion--explorar:hover .accion__flecha, .accion--explorar:focus-visible .accion__flecha{
-  transform:translate(3px,-3px); background:var(--naranja); border-color:var(--naranja); color:var(--petroleo);
-}
+.accion--explorar .accion__flecha{ color:var(--hueso); }
 
 /* Focus visible reforzado dentro de superficie oscura */
 .accion--mapa:focus-visible, .accion--explorar:focus-visible{ outline-offset:4px; }
@@ -1644,7 +1660,7 @@ body.scrolled .top-nav{
   .acciones__grid{ grid-template-columns:1fr 1fr; }
 }
 @media(max-width:760px){
-  .acciones{ padding:var(--sp-xl) 0 var(--sp-2xl); }
+  .acciones{ padding:var(--header-clear-mobile) 0 var(--sp-2xl); }
   .acciones__grid{ display:flex; flex-direction:column; gap:var(--sp-sm); }
   .accion--explorar{
     grid-column:auto; grid-row:auto; min-height:300px;
@@ -1654,8 +1670,8 @@ body.scrolled .top-nav{
 
   /* EugenIA: mucho más compacta, sin dejar de tener personalidad */
   .accion--eugenia{ padding:18px; min-height:0; }
-  .accion--eugenia .accion__icono{ width:32px; height:32px; margin-bottom:8px; }
-  .accion--eugenia .accion__icono svg{ width:15px; height:15px; }
+  .accion--eugenia .accion__icono--sinfondo{ margin-bottom:8px; }
+  .accion--eugenia .accion__icono--sinfondo svg{ width:20px; height:20px; }
   .accion--eugenia .accion__eyebrow{ margin-bottom:4px; }
   .accion--eugenia .accion__titulo{ font-size:1.05rem; }
   .accion--eugenia .accion__desc{ margin-top:4px; font-size:13px; }
@@ -1665,7 +1681,12 @@ body.scrolled .top-nav{
   .acciones__par .accion{ padding:var(--sp-sm); }
   .acciones__par .accion__titulo{ font-size:1.02rem; }
   .acciones__par .accion__desc{ display:none; }
-  .acciones__par .accion__icono--plano svg{ width:20px; height:20px; }
+  .acciones__par .accion__icono--sinfondo svg{ width:20px; height:20px; }
+  /* "Cómo llegar al barrio" se comporta peor en columna angosta que
+     "Mapa interactivo" — le damos más ancho relativo (~57/43) sin
+     alterar el resto del lenguaje visual ni la altura común. */
+  .acciones__par .accion--llegar{ flex:0 0 54%; }
+  .acciones__par .accion--mapa{ flex:1 1 auto; }
 
   /* Safe-zone para el FAB global de EugenIA/WhatsApp: nunca debe tapar
      el título, el ícono ni el destino de la pieza Mapa. */
@@ -1707,11 +1728,19 @@ body.scrolled .top-nav{
   color:rgba(245,243,236,.76); max-width:38ch;
 }
 .plano__cta{
+  position:relative;
   display:inline-flex; align-items:center; gap:10px; margin-top:32px;
   background:var(--naranja); color:var(--petroleo); text-decoration:none;
   font-family:'Karla',sans-serif; font-weight:600; font-size:13.5px;
-  padding:14px 24px; border-radius:var(--r-pill);
+  padding:14px 24px 14px 34px; border-radius:var(--r-pill);
   transition:transform var(--dur-fast) var(--ease-motion), box-shadow var(--dur-fast) var(--ease-motion), filter var(--dur-fast) var(--ease-motion);
+}
+/* Indicador lima — mismo patrón que Novedades: el borde propio garantiza
+   que se perciba aunque el lima puro tenga poco contraste sobre naranja. */
+.plano__cta::before{
+  content:''; position:absolute; left:14px; top:50%; transform:translateY(-50%);
+  width:7px; height:7px; border-radius:50%;
+  background:var(--lima); border:1px solid var(--petroleo);
 }
 .plano__cta:hover, .plano__cta:focus-visible{
   transform:translateY(-2px); box-shadow:var(--shadow-2); filter:brightness(1.05);
@@ -1784,7 +1813,7 @@ body.scrolled .top-nav{
    vertical, radios desiguales) en vez de una grilla de cards prolijas.
    ═══════════════════════════════════════════════════════════════════ */
 
-.vida{ background:var(--crema); padding:var(--sp-2xl) 0 var(--sp-2xl); overflow:hidden; }
+.vida{ background:var(--blanco); padding:var(--sp-2xl) 0 var(--sp-2xl); overflow:hidden; }
 .vida__header{ width:min(1500px, calc(100% - 48px)); margin:0 auto var(--sp-xl); text-align:left; }
 .vida__header .eyebrow{ display:block; }
 .vida__titulo{
@@ -1923,7 +1952,7 @@ body.scrolled .top-nav{
 
 /* Franja calma: una sola columna de lectura, asimétrica — no centrada,
    no en el mismo rincón que el número (dialoga por contraste). */
-.historia__relato{ background:var(--crema); padding:var(--sp-xl) 0 var(--sp-lg); }
+.historia__relato{ background:var(--hueso); padding:var(--sp-xl) 0 var(--sp-lg); }
 .historia__relato-inner{
   width:min(560px, calc(100% - 64px));
   margin-left:max(32px, 14vw); margin-right:auto;
@@ -2009,21 +2038,25 @@ body.scrolled .top-nav{
 }
 .inst__pieza--familia:hover img{ transform:scale(1.025); }
 
-/* Celebrar: contrapunto — banda petróleo de ancho completo, sin foto */
+/* Celebrar: contrapunto — banda verdecl de ancho completo, sin foto.
+   Segunda presencia significativa de verdecl fuera de Acciones — el
+   rol "comunidad/encuentro" encaja mejor acá que en cualquier otra
+   sección. Texto en petróleo (mismo ajuste que EugenIA: naranja/hueso
+   sobre verdecl pierde casi todo el contraste). */
 .inst__pieza--celebrar{
   grid-column:1/3; margin-top:-16px;
-  background:var(--petroleo); border-radius:var(--r-md);
+  background:var(--verdecl); border-radius:var(--r-md);
   padding:36px 40px;
   display:flex; align-items:center; justify-content:space-between; gap:32px; flex-wrap:wrap;
 }
-.inst__eyebrow--clara{ color:var(--naranja); margin-bottom:6px; }
+.inst__eyebrow--clara{ color:var(--petroleo); margin-bottom:6px; }
 .inst__celebrar-titulo{
-  font-family:'Fraunces',serif; font-style:italic; font-weight:400; color:var(--hueso);
+  font-family:'Fraunces',serif; font-style:italic; font-weight:400; color:var(--petroleo);
   font-size:clamp(1.5rem, 1.2rem + 1.4vw, 2.1rem);
 }
 .inst__celebrar-desc{
   font-family:'Karla',sans-serif; font-size:16px; line-height:1.7;
-  color:rgba(245,243,236,.8); max-width:34ch;
+  color:rgba(19,84,87,.82); max-width:34ch;
 }
 
 /* Revelado único y suave — sin stagger por instalación */
@@ -2091,8 +2124,16 @@ body.scrolled .top-nav{
   display:grid; grid-template-columns:150px 1fr; gap:28px; align-items:baseline;
 }
 .cartelera__fecha{
+  display:inline-flex; align-items:center; gap:8px;
   font-family:'Karla',sans-serif; font-weight:600; font-size:11px;
   letter-spacing:.16em; text-transform:uppercase; color:var(--naranja);
+}
+/* Pequeño indicador de estado — patrón de las apps (punto = "activo/vigente").
+   Lleva un borde sutil porque el lima solo rinde bien sobre fondos oscuros;
+   sin el borde, contra hueso, casi no se percibe. */
+.cartelera__fecha::before{
+  content:''; width:7px; height:7px; border-radius:50%; flex:0 0 auto;
+  background:var(--lima); border:1px solid rgba(19,84,87,.55);
 }
 .cartelera__item-titulo{
   grid-column:2; font-family:'Fraunces',serif; font-weight:440; color:var(--petroleo);
@@ -2136,16 +2177,17 @@ body.scrolled .top-nav{
 .pie__dato{
   display:flex; align-items:center; gap:14px; text-decoration:none; color:var(--hueso);
 }
+/* Glyphs sólidos lima por defecto — visibles sin interacción, no solo
+   en hover. Sin círculo: el peso propio del glyph ya alcanza; el área
+   táctil se preserva vía el padding del link completo (.pie__dato). */
 .pie__icono{
-  flex:0 0 auto; width:42px; height:42px; border-radius:50%;
+  flex:0 0 auto; width:26px; height:26px;
   display:flex; align-items:center; justify-content:center;
-  border:1px solid rgba(245,243,236,.28); color:var(--hueso);
-  transition:transform var(--dur-fast) var(--ease-motion), border-color var(--dur-fast) var(--ease-motion), color var(--dur-fast) var(--ease-motion), background var(--dur-fast) var(--ease-motion);
+  color:var(--lima);
+  transition:transform var(--dur-fast) var(--ease-motion);
 }
-.pie__icono svg{ width:18px; height:18px; }
-.pie__dato:hover .pie__icono, .pie__dato:focus-visible .pie__icono{
-  transform:scale(1.06); border-color:var(--naranja); color:var(--naranja); background:rgba(222,175,77,.1);
-}
+.pie__icono svg{ width:26px; height:26px; }
+.pie__dato:hover .pie__icono, .pie__dato:focus-visible .pie__icono{ transform:scale(1.1); }
 .pie__dato-texto{ display:flex; flex-direction:column; gap:4px; min-width:0; }
 .pie__dato-texto strong{
   font-family:'Karla',sans-serif; font-weight:600; font-size:11px;
@@ -2355,7 +2397,7 @@ body.scrolled .top-nav{
     <span class="v"></span>
   </a>
 
-  <div class="diagonal tipo-b" aria-hidden="true" style="background:#efe9dc"></div>
+  <div class="diagonal tipo-b" aria-hidden="true" style="background:#f5f3ec"></div>
 </header>
 
 <!-- ══════════════ ETAPA 5 · DESCUBRIMIENTO ══════════════ -->
@@ -2441,32 +2483,36 @@ body.scrolled .top-nav{
           <span class="accion__titulo">Conocé La Eugenia</span>
           <span class="accion__desc">Descubrí nuestra historia, el entorno y los espacios que compartimos.</span>
         </span>
-        <span class="accion__flecha" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="18" x2="18" y2="6"/><polyline points="9 6 18 6 18 15"/></svg></span>
+        <span class="accion__flecha proteccion-sobre-foto" aria-hidden="true">→</span>
       </a>
 
       <a class="accion accion--eugenia" href="https://wa.me/5493764113300?text=Hola%2C%20EugenIA.%20Quisiera%20hacer%20una%20consulta%20sobre%20La%20Eugenia." target="_blank" rel="noopener noreferrer">
-        <span class="accion__icono" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 1 3.2 6.4L4 20l1.1-3.4A7.96 7.96 0 0 1 4 12Z"/></svg></span>
+        <span class="accion__icono--sinfondo" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 5.94 2 10.8c0 2.66 1.36 5.04 3.5 6.66V22l3.98-2.18c.8.16 1.64.24 2.52.24 5.52 0 10-3.94 10-8.8S17.52 2 12 2z"/></svg></span>
         <span class="accion__contenido">
           <span class="accion__eyebrow">Asistencia · EugenIA</span>
-          <span class="accion__titulo">¿Tenés una consulta?<br>Preguntale a EugenIA. <span class="accion__flecha-in" aria-hidden="true">→</span></span>
+          <span class="accion__titulo">¿Tenés una consulta?<br>Preguntale a EugenIA.</span>
           <span class="accion__desc">Consultá por WhatsApp mediante mensajes de texto.</span>
         </span>
+        <span class="accion__flecha" aria-hidden="true">↗</span>
       </a>
 
       <div class="acciones__par">
         <a class="accion accion--llegar" href="https://www.google.com/maps/dir/?api=1&destination=Club%20de%20Campo%20La%20Eugenia%2C%20Ruta%20Provincial%20105%20Km%205%2C%20Garup%C3%A1%2C%20Misiones" target="_blank" rel="noopener noreferrer">
+          <span class="accion__icono--sinfondo" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C7.58 2 4 5.58 4 10c0 5.25 6.72 11.19 7 11.44a1.5 1.5 0 0 0 2 0C13.28 21.19 20 15.25 20 10c0-4.42-3.58-8-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></svg></span>
           <span class="accion__contenido">
-            <span class="accion__titulo">Cómo llegar al barrio <span class="accion__flecha-in" aria-hidden="true">→</span></span>
+            <span class="accion__titulo">Cómo llegar al barrio</span>
             <span class="accion__desc">Abrí la ubicación de la Garita de Seguridad en Google Maps.</span>
           </span>
+          <span class="accion__flecha" aria-hidden="true">↗</span>
         </a>
 
         <a class="accion accion--mapa" href="https://clubdecampolaeugenia.github.io/mapa-la-eugenia/" target="_blank" rel="noopener noreferrer">
-          <span class="accion__icono accion__icono--plano" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M14.8 9.2 13 13l-3.8 1.8L11 11l3.8-1.8Z"/></svg></span>
+          <span class="accion__icono--sinfondo" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 4 20l8-4 8 4L12 2z"/></svg></span>
           <span class="accion__contenido">
-            <span class="accion__titulo">Mapa interactivo <span class="accion__flecha-in" aria-hidden="true">→</span></span>
+            <span class="accion__titulo">Mapa interactivo</span>
             <span class="accion__desc">Elegí el destino de tu visita y consultá el recorrido desde la Garita de Seguridad.</span>
           </span>
+          <span class="accion__flecha" aria-hidden="true">↗</span>
         </a>
       </div>
 
@@ -2741,19 +2787,19 @@ body.scrolled .top-nav{
 
     <div class="pie__contactos">
       <a class="pie__dato" href="https://wa.me/5493764113300" target="_blank" rel="noopener noreferrer">
-        <span class="pie__icono" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>
+        <span class="pie__icono" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.35 2 11.7c0 1.85.53 3.58 1.45 5.06L2 22l5.4-1.4a10.1 10.1 0 0 0 4.6 1.1c5.52 0 10-4.35 10-9.7S17.52 2 12 2Zm0 17.7c-1.5 0-2.9-.4-4.12-1.1l-.3-.17-3.2.83.86-3.1-.2-.32A7.9 7.9 0 0 1 4 11.7C4 7.45 7.58 4 12 4s8 3.45 8 7.7-3.58 8-8 8Z"/><path d="M9.1 8.24c-.19-.42-.38-.43-.56-.44h-.48c-.17 0-.44.06-.67.31-.23.25-.87.85-.87 2.08s.89 2.41 1.02 2.58c.13.17 1.76 2.68 4.26 3.76.59.25 1.06.4 1.42.52.6.19 1.14.16 1.57.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.15-1.18-.06-.1-.23-.17-.48-.29-.25-.13-1.47-.73-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.65.81-.79.97-.15.17-.29.19-.54.06-.25-.13-1.05-.39-2-1.24-.74-.66-1.24-1.47-1.39-1.72-.14-.25-.01-.38.11-.51.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.08-.16.04-.31-.02-.44-.06-.13-.55-1.35-.76-1.84Z"/></svg></span>
         <span class="pie__dato-texto"><strong>WhatsApp</strong><span>+54 9 3764 11-3300</span></span>
       </a>
       <a class="pie__dato" href="tel:+5491161888188">
-        <span class="pie__icono" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+        <span class="pie__icono" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8Z"/></svg></span>
         <span class="pie__dato-texto"><strong>Garita de Seguridad</strong><span>+54 9 11 6188-8188</span></span>
       </a>
       <a class="pie__dato" href="mailto:clubdecampolaeugenia@gmail.com">
-        <span class="pie__icono" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22 6 12 13 2 6"/></svg></span>
+        <span class="pie__icono" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6Zm2.4-.5 6.1 5 6.1-5H5.4ZM19 7.9l-6.4 5.2a1 1 0 0 1-1.2 0L5 7.9V18h14V7.9Z"/></svg></span>
         <span class="pie__dato-texto"><strong>Email</strong><span>clubdecampolaeugenia@gmail.com</span></span>
       </a>
       <a class="pie__dato pie__dato--instagram" href="https://www.instagram.com/laeugeniaclub" target="_blank" rel="noopener noreferrer">
-        <span class="pie__icono" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></span>
+        <span class="pie__icono" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="2.5" width="19" height="19" rx="5"/><circle cx="12" cy="12" r="4.2"/><line x1="17.3" y1="6.7" x2="17.31" y2="6.7"/></svg></span>
         <span class="pie__dato-texto"><strong>Instagram</strong><span>@laeugeniaclub</span></span>
       </a>
     </div>
