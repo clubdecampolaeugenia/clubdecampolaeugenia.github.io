@@ -659,16 +659,26 @@
     padding:20px 22px;
     border-radius:16px;
     box-shadow:0 8px 28px rgba(9,26,26,0.16);
-    opacity:0;
-    transform:translateY(6px) scale(0.96);
     pointer-events:none;
-    transform-origin:bottom right;
-    transition:opacity 0.32s var(--ease-suave), transform 0.32s var(--ease-suave);
+    visibility:hidden;
+    opacity:0;
+    /* Cierre: el remanente converge a un punto casi puntual (8px) en la
+       esquina más cercana al FAB real (mismo borde derecho, 62px abajo),
+       con un empujón sutil hacia abajo (translateY) y la opacidad
+       cayendo a 0 en el último tramo — para que no quede un instante
+       "un círculo blanco" del tamaño del FAB flotando sobre él. Cierre
+       más rápido y decidido que la apertura (300ms vs 380ms). */
+    transform:translateY(22px);
+    clip-path:inset(calc(100% - 8px) 0px 0px calc(100% - 8px) round 4px);
+    transition:clip-path 300ms var(--ease-motion), transform 300ms var(--ease-motion), opacity 300ms ease-in, visibility 0s linear 300ms;
   }
   .wsp-widget[data-abierto="true"] .wsp-popup{
-    opacity:1;
-    transform:translateY(0) scale(1);
     pointer-events:auto;
+    visibility:visible;
+    opacity:1;
+    transform:translateY(0);
+    clip-path:inset(0 0 0 0 round 22px);
+    transition:clip-path 380ms var(--ease-motion), transform 380ms var(--ease-motion), opacity 160ms ease, visibility 0s;
   }
   .wsp-popup .saludo{display:none;}
   .wsp-popup .titulo{
@@ -1366,7 +1376,6 @@ body.scrolled .top-nav{
 .site-header[data-menu="open"] .site-header__panel nav a:nth-child(4){transition-delay:180ms;}
 .site-header[data-menu="open"] .site-header__panel nav a:nth-child(5){transition-delay:220ms;}
 .site-header[data-menu="open"] .site-header__panel nav a:nth-child(6){transition-delay:260ms;}
-.site-header[data-menu="open"] .site-header__panel nav a:nth-child(7){transition-delay:300ms;}
 /* Ningún item queda seleccionado permanentemente. El fondo lima aparece
    solo mientras dura la interacción real: hover con cursor, :active
    durante el toque (se retira solo al soltar, sin quedar "pegado"), y
@@ -2125,21 +2134,15 @@ body.scrolled .top-nav{
 .inst__pieza--familia:hover img{ transform:scale(1.025); }
 
 /* Celebrar: pausa visual — banda horizontal baja, deliberadamente
-   distinta de las cards de foto (Deporte/Familia). No debe leerse como
-   una tercera card del mismo formato. Fondo de respaldo mientras no
-   exista la fotografía real (ver comentario en el HTML). */
+   distinta de las cards de foto (Deporte/Familia) en altura/proporción,
+   pero con la misma jerarquía de cápsula/espaciados que ellas (misma
+   .inst__caption, mismo padding, sin título propio). */
 .inst__pieza--celebrar{
   grid-column:1/3; margin-top:-16px;
-  background:linear-gradient(135deg, var(--petroleo) 0%, var(--tinta) 100%);
   border-radius:var(--r-md); box-shadow:var(--shadow-1);
   height:clamp(130px, 11vw, 178px);
 }
-.inst__pieza--celebrar .inst__caption{ padding:22px 28px; }
-.inst__caption-titulo{
-  display:block; font-family:'Fraunces',serif; font-weight:440; color:var(--hueso);
-  font-size:clamp(1.15rem, 1rem + .8vw, 1.5rem); line-height:1.25; margin-bottom:4px;
-}
-.inst__pieza--celebrar .inst__caption p{ font-size:14px; }
+.inst__pieza--celebrar img{ object-position:center 58%; }
 
 /* Revelado único y suave — sin stagger por instalación */
 .inst__grid{ opacity:0; transform:translateY(20px); transition:opacity 680ms var(--ease-motion), transform 680ms var(--ease-motion); }
@@ -2169,7 +2172,6 @@ body.scrolled .top-nav{
     width:100vw; margin-left:calc(50% - 50vw); margin-right:calc(50% - 50vw);
     border-radius:0; height:150px;
   }
-  .inst__pieza--celebrar .inst__caption{ padding:18px 22px; }
 }
 
 @media(prefers-reduced-motion:reduce){
@@ -2325,7 +2327,6 @@ body.scrolled .top-nav{
 
   <div class="site-header__panel" id="siteHeaderPanel">
     <nav aria-label="Menú">
-      <a href="#inicio">Inicio</a>
       <a href="#visitanos">Visitanos</a>
       <a href="#historia">Historia</a>
       <a href="#instalaciones">Instalaciones</a>
@@ -2439,12 +2440,7 @@ body.scrolled .top-nav{
       var open = header.getAttribute('data-menu') === 'open';
       if(open){ closeMenu(true); } else { openMenu(); }
     });
-    panel.addEventListener('click', function(e){
-      if(e.target === panel) closeMenu(false);
-    });
-    panel.querySelectorAll('a').forEach(function(a){
-      a.addEventListener('click', function(){ closeMenu(false); });
-    });
+    panel.addEventListener('click', function(){ closeMenu(false); });
     document.addEventListener('keydown', function(e){
       if(e.key === 'Escape' && header.getAttribute('data-menu') === 'open'){
         closeMenu(true);
@@ -2799,20 +2795,11 @@ body.scrolled .top-nav{
     </figure>
 
     <figure class="inst__pieza inst__pieza--celebrar">
-      <!-- FOTOGRAFÍA PENDIENTE — no confundir con Deporte/Familia (aéreas):
-           acá va un plano corto de encuentro/mesa compartida, sin ser
-           foto de banco de bodas/eventos corporativos. Cuando el asset
-           esté listo, agregarlo como:
-             fotos/album-celebrar-encuentro.jpg
-           y descomentar la línea de abajo (dejando el <span class="inst__velo">
-           después de la imagen para que seguir garantizando contraste):
-           <img src="fotos/album-celebrar-encuentro.jpg" alt="Mesa compartida en un encuentro al aire libre en el club." loading="lazy">
-           Mientras tanto se usa el fondo degradé de respaldo (ver CSS). -->
+      <img src="fotos/album-celebrar-encuentro.jpg" alt="Familia y amigos compartiendo un asado y empanadas en la cantina del club." loading="lazy">
       <span class="inst__velo" aria-hidden="true"></span>
       <figcaption class="inst__caption">
         <span class="inst__eyebrow inst__eyebrow--pill">Celebrar</span>
-        <span class="inst__caption-titulo">Momentos para compartir.</span>
-        <p>Salón de eventos y cantina.</p>
+        <p>Para compartir: salón de eventos y cantina.</p>
       </figcaption>
     </figure>
   </div>
