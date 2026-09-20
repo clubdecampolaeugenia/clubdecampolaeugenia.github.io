@@ -2133,16 +2133,19 @@ body.scrolled .top-nav{
 }
 .inst__pieza--familia:hover img{ transform:scale(1.025); }
 
-/* Celebrar: pausa visual — banda horizontal baja, deliberadamente
-   distinta de las cards de foto (Deporte/Familia) en altura/proporción,
-   pero con la misma jerarquía de cápsula/espaciados que ellas (misma
-   .inst__caption, mismo padding, sin título propio). */
+/* Celebrar: pieza fotográfica panorámica — el tercer tipo de foto de
+   Instalaciones (dominante / secundaria-vertical / panorámica). Más
+   presencia que la banda tipográfica anterior, pero deliberadamente
+   más baja y ancha que Deporte/Familia — un cierre horizontal, no una
+   tercera card del mismo formato. Misma cápsula/espaciado que las
+   otras dos. object-position en "center center" como punto de partida
+   neutro: ajustar cuando se pueda inspeccionar la foto real. */
 .inst__pieza--celebrar{
   grid-column:1/3; margin-top:-16px;
   border-radius:var(--r-md); box-shadow:var(--shadow-1);
-  height:clamp(130px, 11vw, 178px);
+  height:clamp(200px, 15vw, 280px);
 }
-.inst__pieza--celebrar img{ object-position:center 58%; }
+.inst__pieza--celebrar img{ object-position:center center; }
 
 /* Revelado único y suave — sin stagger por instalación */
 .inst__grid{ opacity:0; transform:translateY(20px); transition:opacity 680ms var(--ease-motion), transform 680ms var(--ease-motion); }
@@ -2167,10 +2170,13 @@ body.scrolled .top-nav{
     width:100vw; margin-left:calc(50% - 50vw); margin-right:calc(50% - 50vw); margin-top:0;
     aspect-ratio:1/1; border-radius:0;
   }
+  /* Mobile: no forzar la proporción extrema de desktop — un recorte
+     panorámico moderado (16/10) lee mejor en una pantalla angosta que
+     una franja demasiado baja. */
   .inst__pieza--celebrar{
     grid-column:auto; margin-top:0;
     width:100vw; margin-left:calc(50% - 50vw); margin-right:calc(50% - 50vw);
-    border-radius:0; height:150px;
+    border-radius:0; height:auto; aspect-ratio:16/10;
   }
 }
 
@@ -2313,9 +2319,8 @@ body.scrolled .top-nav{
 
     <div class="site-header__nav">
       <nav class="site-header__links" aria-label="Navegación principal">
-        <a href="#visitanos">Visitanos</a>
-        <a href="#album">Álbum</a>
-        <a href="#historia">Historia</a>
+        <a href="#contacto">Contacto</a>
+        <a href="https://clubdecampolaeugenia.github.io/mapa-la-eugenia/" target="_blank" rel="noopener noreferrer">¿Estás en La Eugenia?</a>
       </nav>
       <a class="site-header__cta" href="https://www.google.com/maps/dir/?api=1&destination=Club%20de%20Campo%20La%20Eugenia%2C%20Ruta%20Provincial%20105%20Km%205%2C%20Garup%C3%A1%2C%20Misiones" target="_blank" rel="noopener noreferrer">Cómo llegar</a>
       <button class="site-header__toggle" id="siteHeaderToggle" type="button" aria-expanded="false" aria-controls="siteHeaderPanel" aria-label="Abrir menú">
@@ -2327,7 +2332,7 @@ body.scrolled .top-nav{
 
   <div class="site-header__panel" id="siteHeaderPanel">
     <nav aria-label="Menú">
-      <a href="#visitanos">Visitanos</a>
+      <a href="https://clubdecampolaeugenia.github.io/mapa-la-eugenia/" target="_blank" rel="noopener noreferrer">¿Estás en La Eugenia?</a>
       <a href="#historia">Historia</a>
       <a href="#instalaciones">Instalaciones</a>
       <a href="#novedades">Novedades</a>
@@ -2795,7 +2800,7 @@ body.scrolled .top-nav{
     </figure>
 
     <figure class="inst__pieza inst__pieza--celebrar">
-      <img src="fotos/album-celebrar-encuentro.jpg" alt="Familia y amigos compartiendo un asado y empanadas en la cantina del club." loading="lazy">
+      <img src="fotos/cantina-la-eugenia.jpg.png" alt="Familia y amigos compartiendo un asado en la cantina del club." loading="lazy">
       <span class="inst__velo" aria-hidden="true"></span>
       <figcaption class="inst__caption">
         <span class="inst__eyebrow inst__eyebrow--pill">Celebrar</span>
