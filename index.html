@@ -1183,11 +1183,10 @@ body.scrolled .top-nav{
   stroke:none!important;
   transition:fill .2s ease;
 }
-/* Estado interactivo — la superficie pasa a lima, el ícono se mantiene
-   petróleo. Sin agrandar, sin glow, sin borde nuevo. */
-.wsp-fab:hover .wsp-contorno,
-.wsp-fab:focus-visible .wsp-contorno,
-.wsp-fab:active .wsp-contorno{
+/* Estado del FAB vinculado al popup real (data-abierto), no al hover:
+   cerrado = hueso, abierto = lima. Mismo atributo que ya controla la
+   visibilidad del popup — sin lógica JS nueva ni duplicada. */
+.wsp-widget[data-abierto="true"] .wsp-contorno{
   fill:var(--lima)!important;
 }
 .wsp-telefono,
@@ -1368,16 +1367,19 @@ body.scrolled .top-nav{
 .site-header[data-menu="open"] .site-header__panel nav a:nth-child(5){transition-delay:220ms;}
 .site-header[data-menu="open"] .site-header__panel nav a:nth-child(6){transition-delay:260ms;}
 .site-header[data-menu="open"] .site-header__panel nav a:nth-child(7){transition-delay:300ms;}
-.site-header__panel nav a:hover, .site-header__panel nav a:focus-visible{ color:var(--naranja); }
-/* Estado activo — único recurso de selección: fondo lima + texto
-   petróleo. Distinto del hover (que solo cambia color de texto), para
-   que no se confundan. */
-.site-header__panel nav a.is-active{
+/* Ningún item queda seleccionado permanentemente. El fondo lima aparece
+   solo mientras dura la interacción real: hover con cursor, :active
+   durante el toque (se retira solo al soltar, sin quedar "pegado"), y
+   focus-visible para teclado — nunca como estado persistente. */
+.site-header__panel nav a:hover,
+.site-header__panel nav a:focus-visible,
+.site-header__panel nav a:active{
   background:var(--lima); color:var(--petroleo);
   border-top-color:transparent;
 }
-.site-header__panel nav a.is-active:hover,
-.site-header__panel nav a.is-active:focus-visible{ color:var(--petroleo); }
+.site-header__panel nav a:focus-visible{
+  outline:2px solid var(--petroleo); outline-offset:-2px;
+}
 
 @media(max-width:760px){
   .site-header__bar{ width:calc(100% - 24px); margin:14px auto 0; padding:8px 12px; }
@@ -2023,32 +2025,44 @@ body.scrolled .top-nav{
   font-size:clamp(1.9rem, 1.5rem + 2vw, 2.7rem); max-width:18ch; line-height:1.15;
 }
 
-/* Marquesina — franja editorial, una sola línea, loop infinito sin
-   corte perceptible (dos copias idénticas + translateX(-50%)). */
+/* Marquesina — franja editorial, loop infinito real. Causa del corte
+   anterior: 2 copias de una sola frase (~576px c/u) sumaban 1152px de
+   track contra un contenedor de 1920px — quedaba hueco sin cubrir.
+   Fix estructural: cada "copia" repite la frase varias veces hasta
+   garantizar más ancho que cualquier viewport real, no un parche de
+   padding/offset. */
 .inst__marquesina{
   width:100%; overflow:hidden; background:var(--petroleo);
-  padding:18px 0; margin:40px 0 44px;
+  padding:22px 0; margin:40px 0 44px;
 }
 .inst__marquesina-track{
-  display:flex; width:max-content;
-  animation:inst-marquesina-scroll 34s linear infinite;
+  display:flex; align-items:center; width:max-content;
+  animation:inst-marquesina-scroll 38s linear infinite;
 }
 .inst__marquesina-item{
   display:inline-flex; flex:0 0 auto; white-space:nowrap;
-  font-family:'Karla',sans-serif; font-weight:600; font-size:13px;
-  letter-spacing:.15em; text-transform:uppercase; color:var(--lima);
-  padding-right:2ch;
+  font-family:'Karla',sans-serif; font-weight:600; font-size:15px;
+  letter-spacing:.13em; text-transform:uppercase; color:var(--lima);
 }
+.inst__marquesina-item span{ padding-right:2ch; }
 @keyframes inst-marquesina-scroll{
   from{ transform:translateX(0); }
   to{ transform:translateX(-50%); }
 }
+.inst__marquesina-static{ display:none; }
 @media(prefers-reduced-motion:reduce){
-  .inst__marquesina-track{ animation:none; }
+  .inst__marquesina-track{ display:none; }
+  .inst__marquesina-static{
+    display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+    font-family:'Karla',sans-serif; font-weight:600; font-size:15px;
+    letter-spacing:.13em; text-transform:uppercase; color:var(--lima);
+  }
 }
 @media(max-width:760px){
   .inst__marquesina{ margin:22px 0 26px; padding:8px 0; }
-  .inst__marquesina-item{ font-size:9.5px; letter-spacing:.1em; padding-right:1.4ch; }
+  .inst__marquesina-item{ font-size:9.5px; letter-spacing:.1em; }
+  .inst__marquesina-item span{ padding-right:1.4ch; }
+  .inst__marquesina-static{ font-size:9.5px; letter-spacing:.1em; }
 }
 
 /* Acento botánico — preparado para un PNG orgánico/vegetal con
@@ -2428,41 +2442,8 @@ body.scrolled .top-nav{
     panel.addEventListener('click', function(e){
       if(e.target === panel) closeMenu(false);
     });
-
-    /* Estado activo del menú — un único recurso (fondo lima). Reutiliza
-       IntersectionObserver, igual que el resto del sitio, sin agregar
-       una arquitectura nueva. Mínimo también al tocar un link, para
-       feedback inmediato aunque el observer todavía no haya corrido. */
-    var navLinks = Array.prototype.slice.call(panel.querySelectorAll('nav a[href^="#"]'));
-    function setActiveLink(id){
-      navLinks.forEach(function(a){
-        var match = a.getAttribute('href') === '#' + id;
-        a.classList.toggle('is-active', match);
-        if(match){ a.setAttribute('aria-current','page'); }
-        else{ a.removeAttribute('aria-current'); }
-      });
-    }
-    var sectionMap = navLinks.map(function(a){
-      return {link:a, section: document.getElementById(a.getAttribute('href').slice(1))};
-    }).filter(function(x){ return x.section; });
-    if('IntersectionObserver' in window && sectionMap.length){
-      var spyIO = new IntersectionObserver(function(entries){
-        entries.forEach(function(entry){
-          if(entry.isIntersecting){
-            var match = sectionMap.filter(function(x){ return x.section === entry.target; })[0];
-            if(match) setActiveLink(match.section.id);
-          }
-        });
-      }, {threshold:0.5});
-      sectionMap.forEach(function(x){ spyIO.observe(x.section); });
-    }
-
     panel.querySelectorAll('a').forEach(function(a){
-      a.addEventListener('click', function(){
-        closeMenu(false);
-        var href = a.getAttribute('href');
-        if(href && href.charAt(0) === '#'){ setActiveLink(href.slice(1)); }
-      });
+      a.addEventListener('click', function(){ closeMenu(false); });
     });
     document.addEventListener('keydown', function(e){
       if(e.key === 'Escape' && header.getAttribute('data-menu') === 'open'){
@@ -2792,9 +2773,10 @@ body.scrolled .top-nav{
 
   <div class="inst__marquesina" aria-hidden="true">
     <div class="inst__marquesina-track">
-      <span class="inst__marquesina-item">PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS ·</span>
-      <span class="inst__marquesina-item">PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS ·</span>
+      <span class="inst__marquesina-item"><span>PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS ·</span><span>PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS ·</span><span>PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS ·</span><span>PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS ·</span><span>PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS ·</span></span>
+      <span class="inst__marquesina-item"><span>PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS ·</span><span>PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS ·</span><span>PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS ·</span><span>PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS ·</span><span>PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS ·</span></span>
     </div>
+    <p class="inst__marquesina-static">PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS ·</p>
   </div>
 
   <div class="inst__grid">
