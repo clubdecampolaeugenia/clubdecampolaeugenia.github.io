@@ -1863,7 +1863,12 @@ body.scrolled .top-nav{
   font-size:clamp(1.8rem, 1.4rem + 1.8vw, 2.5rem);
 }
 
-/* ── Mosaico desktop ── */
+/* ── Mosaico desktop — recomposición: dos bandas horizontales internamente
+   alineadas (no una fila con piezas sueltas). Banda superior: pileta +
+   caballo + bandurrias, los tres comparten el mismo borde inferior.
+   Banda inferior: juegos + entrada/pinos, mismo ancho y borde compartido.
+   Geometría validada por medición real (0 huecos, 0 superposición) en
+   1920/1440/1024px antes de implementar. ── */
 .vida__mosaico{
   position:relative;
   width:min(1500px, calc(100% - 48px)); margin:0 auto;
@@ -1875,39 +1880,38 @@ body.scrolled .top-nav{
   transition:transform 900ms var(--ease-motion);
 }
 
-/* Dominante: gran superficie editorial — sin radio, sin sombra, la
-   fotografía funciona como plano, no como tarjeta. */
+/* Banda superior */
 .vida__foto--dominante{
-  grid-column:1 / 8; grid-row:1 / 9;
+  grid-column:1 / 8; grid-row:1 / 8;
   border-radius:0;
   will-change:transform;
 }
-/* Desplazada verticalmente respecto de la dominante: rompe el eje
-   compartido que hacía leer todo como fila de módulos iguales. */
 .vida__foto--ninos{
-  grid-column:8 / 11; grid-row:1 / 9;
+  grid-column:8 / 11; grid-row:1 / 8;
+  margin-top:32px;
+  border-radius:var(--r-md);
+  box-shadow:var(--shadow-1);
+}
+.vida__foto--bandurrias{
+  grid-column:11 / 13; grid-row:1 / 8;
   margin-top:64px;
   border-radius:var(--r-md);
   box-shadow:var(--shadow-1);
 }
-/* Sangra hasta el borde real del viewport — la ruptura más clara de
-   la composición. Sin radio: es la pieza que "se sale" de la grilla. */
-.vida__foto--bandurrias{
-  grid-column:11 / 13; grid-row:1 / 6;
-  margin-right:calc(-24px - max(0px, (100vw - 1548px) / 2));
-  border-radius:0;
-}
-/* Pieza chica rodeada de espacio negativo: columna más angosta que su
-   celda, centrada, sin tocar los bordes de la grilla. */
+.vida__foto--bandurrias img{ object-position:50% 72%; }
+
+/* Banda inferior — mismo ancho y borde compartido entre las dos piezas */
 .vida__foto--juegos{
-  grid-column:9 / 13; grid-row:7 / 11;
-  width:82%; margin:8px auto 0;
-  border-radius:var(--r-sm);
+  grid-column:1 / 7; grid-row:8 / 13;
+  margin-top:18px;
+  border-radius:var(--r-md);
   box-shadow:var(--shadow-1);
 }
-.vida__foto--basquet{
-  grid-column:1 / 8; grid-row:9 / 12;
-  border-radius:0;
+.vida__foto--entrada{
+  grid-column:7 / 13; grid-row:8 / 13;
+  margin-top:18px;
+  border-radius:var(--r-md);
+  box-shadow:var(--shadow-1);
 }
 
 /* Ninguna imagen es un botón: sin cursor ni affordance falsa */
@@ -2668,8 +2672,8 @@ body.scrolled .top-nav{
     <figure class="vida__foto vida__foto--juegos vida__foto--revela">
       <img src="fotos/hero-04-juegos.jpg" alt="Plaza de juegos infantiles del club." loading="lazy">
     </figure>
-    <figure class="vida__foto vida__foto--basquet">
-      <img src="fotos/album-aro-basquet.jpg" alt="Cancha de básquet y vóley del club, rodeada de pinos." loading="lazy">
+    <figure class="vida__foto vida__foto--entrada">
+      <img src="fotos/album-entrada-pinos.jpg" alt="Entrada del barrio bajo los pinos, camino a las instalaciones del club." loading="lazy">
     </figure>
   </div>
 
@@ -2682,13 +2686,13 @@ body.scrolled .top-nav{
       <img src="fotos/album-caballo-ninos.jpg" alt="" loading="lazy">
     </figure>
     <figure class="vida__slide">
+      <img src="fotos/album-entrada-pinos.jpg" alt="" loading="lazy">
+    </figure>
+    <figure class="vida__slide">
       <img src="fotos/hero-04-juegos.jpg" alt="" loading="lazy">
     </figure>
     <figure class="vida__slide vida__slide--alta">
-      <img src="fotos/album-bandurrias.jpg" alt="" loading="lazy">
-    </figure>
-    <figure class="vida__slide">
-      <img src="fotos/album-aro-basquet.jpg" alt="" loading="lazy">
+      <img src="fotos/album-bandurrias.jpg" alt="" loading="lazy" style="object-position:50% 72%">
     </figure>
   </div>
 </section>
