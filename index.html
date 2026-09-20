@@ -1455,12 +1455,12 @@ body.scrolled .top-nav{
 }
 .descubrimiento__grid{
   position:relative; display:flex; align-items:center;
-  min-height:50vh; width:100%;
-  padding-left:max(32px, 4vw);
+  min-height:50vh; width:100%; max-width:1760px; margin:0 auto;
+  padding-left:clamp(32px, 4vw, 64px);
 }
 .descubrimiento__texto{
   position:relative; z-index:2;
-  width:auto; max-width:min(460px, calc(38vw - 48px));
+  width:auto; max-width:min(500px, calc(38vw - 48px));
   padding-right:var(--sp-lg);
 }
 .descubrimiento__frase{
@@ -2320,7 +2320,7 @@ body.scrolled .top-nav{
     <div class="site-header__nav">
       <nav class="site-header__links" aria-label="Navegación principal">
         <a href="#contacto">Contacto</a>
-        <a href="https://clubdecampolaeugenia.github.io/mapa-la-eugenia/" target="_blank" rel="noopener noreferrer">¿Estás en La Eugenia?</a>
+        <a href="#visitanos">¿Estás en La Eugenia?</a>
       </nav>
       <a class="site-header__cta" href="https://www.google.com/maps/dir/?api=1&destination=Club%20de%20Campo%20La%20Eugenia%2C%20Ruta%20Provincial%20105%20Km%205%2C%20Garup%C3%A1%2C%20Misiones" target="_blank" rel="noopener noreferrer">Cómo llegar</a>
       <button class="site-header__toggle" id="siteHeaderToggle" type="button" aria-expanded="false" aria-controls="siteHeaderPanel" aria-label="Abrir menú">
@@ -2332,7 +2332,7 @@ body.scrolled .top-nav{
 
   <div class="site-header__panel" id="siteHeaderPanel">
     <nav aria-label="Menú">
-      <a href="https://clubdecampolaeugenia.github.io/mapa-la-eugenia/" target="_blank" rel="noopener noreferrer">¿Estás en La Eugenia?</a>
+      <a href="#visitanos">¿Estás en La Eugenia?</a>
       <a href="#historia">Historia</a>
       <a href="#instalaciones">Instalaciones</a>
       <a href="#novedades">Novedades</a>
