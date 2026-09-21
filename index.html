@@ -1290,8 +1290,6 @@ body.scrolled .top-nav{
   transition:transform var(--dur-fast) var(--ease-motion), filter var(--dur-fast) var(--ease-motion), width var(--dur-base) var(--ease-motion);
 }
 .site-header__brand:hover .site-header__logo{ transform:scale(1.05); }
-/* Menú abierto: el logo gana presencia frente a la navegación grande. */
-.site-header[data-menu="open"] .site-header__logo{ width:40px; }
 
 .site-header__nav{
   display:flex; align-items:center; gap:var(--sp-md);
@@ -1409,6 +1407,11 @@ body.scrolled .top-nav{
   .site-header__links{ display:none; }
   .site-header__toggle{ display:flex; }
   .site-header__nav{ gap:var(--sp-sm); }
+
+  /* Un solo logo, dos escalas — solo en mobile: normal arriba (30px,
+     referencia real del home) y compacta dentro de la píldora fija al
+     scrollear. El menú mobile usa la escala normal, no una tercera. */
+  .site-header[data-state="visible"] .site-header__logo{ width:24px; }
 
   /* Menú abierto: el header se integra al panel — sin cápsula propia,
      solo logo + X directamente sobre el fondo petróleo. Transición
@@ -1796,7 +1799,8 @@ body.scrolled .top-nav{
 .marca-titulo{
   font-family:'ChristieBrand',serif; font-weight:400; font-style:normal;
   font-size:1.5em; line-height:1.15; white-space:nowrap;
-  display:inline-block; margin-top:.15em;
+  word-spacing:-0.22em;
+  display:inline-block;
 }
 .plano__lead{
   margin-top:20px; font-family:'Karla',sans-serif; font-size:16px; line-height:1.7;
@@ -2393,8 +2397,8 @@ body.scrolled .top-nav{
 
 <div class="wsp-widget" id="wspWidget" data-abierto="false">
   <div class="wsp-popup">
-    <p class="titulo">¡Hola! Soy EugenIA.</p>
-    <p class="sub">La asistente virtual de La Eugenia. Escribime por WhatsApp y te ayudo con tu consulta.</p>
+    <p class="titulo">¡Hola! Soy EugenIA</p>
+    <p class="sub">La asistente virtual del Club. Escribime por WhatsApp y te ayudo con tu consulta.</p>
     <a class="wsp-popup-btn" href="https://wa.me/5493764113300?text=Hola%2C%20EugenIA.%20Quisiera%20hacer%20una%20consulta%20sobre%20La%20Eugenia." target="_blank" rel="noopener noreferrer">Iniciar chat</a>
   </div>
   <button class="wsp-fab" id="wspFab" aria-label="Chatear con EugenIA por WhatsApp" aria-expanded="false">
@@ -2598,8 +2602,8 @@ body.scrolled .top-nav{
         <img class="accion__foto" src="fotos/album-atardecer-sendero.jpg" alt="" loading="lazy">
         <span class="accion__velo" aria-hidden="true"></span>
         <span class="accion__contenido">
-          <span class="accion__titulo">Conocé<br><span class="marca-titulo">La Eugenia</span></span>
-          <span class="accion__desc">Descubrí nuestra historia, el entorno y los espacios que compartimos.</span>
+          <span class="accion__titulo">Descubrí<br><span class="marca-titulo">La Eugenia</span></span>
+          <span class="accion__desc">Nuestra historia, el entorno y los espacios que compartimos.</span>
         </span>
         <span class="accion__flecha accion__flecha--sobre-foto" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg></span>
       </a>
@@ -2608,7 +2612,7 @@ body.scrolled .top-nav{
         <span class="accion__icono--sinfondo" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 5.94 2 10.8c0 2.66 1.36 5.04 3.5 6.66V22l3.98-2.18c.8.16 1.64.24 2.52.24 5.52 0 10-3.94 10-8.8S17.52 2 12 2z"/></svg></span>
         <span class="accion__contenido">
           <span class="accion__eyebrow">Asistente virtual</span>
-          <span class="accion__titulo">¿Tenés una consulta?<br>Preguntale a EugenIA.</span>
+          <span class="accion__titulo">¿Tenés una consulta?<br>Preguntale a EugenIA</span>
           <span class="accion__desc">Consultá por WhatsApp mediante mensajes de texto.</span>
         </span>
         <span class="accion__flecha" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="18" x2="18" y2="6"/><polyline points="9 6 18 6 18 15"/></svg></span>
@@ -2643,8 +2647,8 @@ body.scrolled .top-nav{
   <div class="plano__grid">
     <div class="plano__texto">
       <span class="plano__eyebrow">El barrio</span>
-      <h2 class="plano__titulo">Reconocé<br><strong class="marca-titulo">La Eugenia</strong><br>desde el aire</h2>
-      <p class="plano__lead">Descubrí cómo está organizado el barrio y elegí tu destino en el mapa interactivo.</p>
+      <h2 class="plano__titulo">Conocé<br><strong class="marca-titulo">La Eugenia</strong><br>desde el aire</h2>
+      <p class="plano__lead">Explorá cómo está organizado el barrio y elegí tu destino en el mapa interactivo.</p>
       <a class="plano__cta" id="planoCta" href="https://clubdecampolaeugenia.github.io/mapa-la-eugenia/" target="_blank" rel="noopener noreferrer">Explorar mapa interactivo <span class="plano__cta-flecha" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="18" x2="18" y2="6"/><polyline points="9 6 18 6 18 15"/></svg></span></a>
     </div>
 
