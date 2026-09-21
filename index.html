@@ -1912,7 +1912,10 @@ body.scrolled .top-nav{
   transition:transform 900ms var(--ease-motion);
 }
 
-/* Banda superior */
+/* Banda superior — las tres piezas comparten el mismo borde superior
+   e inferior exactamente (sin offsets verticales manuales): el gap
+   entre piezas es igual al gap horizontal de la grilla (18px), tanto
+   entre columnas como entre bandas. */
 .vida__foto--dominante{
   grid-column:1 / 8; grid-row:1 / 8;
   border-radius:var(--r-md);
@@ -1921,47 +1924,52 @@ body.scrolled .top-nav{
 }
 .vida__foto--ninos{
   grid-column:8 / 11; grid-row:1 / 8;
-  margin-top:32px;
   border-radius:var(--r-md);
   box-shadow:var(--shadow-1);
 }
 .vida__foto--bandurrias{
   grid-column:11 / 13; grid-row:1 / 8;
-  margin-top:64px;
   border-radius:var(--r-md);
   box-shadow:var(--shadow-1);
 }
 .vida__foto--bandurrias img{ object-position:50% 72%; }
 
-/* Banda inferior — mismo ancho y borde compartido entre las dos piezas */
+/* Banda media */
 .vida__foto--juegos{
   grid-column:1 / 7; grid-row:8 / 13;
-  margin-top:18px;
   border-radius:var(--r-md);
   box-shadow:var(--shadow-1);
 }
 .vida__foto--entrada{
   grid-column:7 / 13; grid-row:8 / 13;
-  margin-top:18px;
   border-radius:var(--r-md);
   box-shadow:var(--shadow-1);
 }
-/* Sexta pieza, agregada sin tocar las cinco anteriores — banda baja de
-   cierre, más chica que las demás a propósito. */
+
+/* Banda inferior — las tres piezas nuevas, integradas a la grilla en
+   vez de una franja panorámica aparte. */
+.vida__foto--pileta-gente{
+  grid-column:1 / 4; grid-row:13 / 19;
+  border-radius:var(--r-md);
+  box-shadow:var(--shadow-1);
+}
 .vida__foto--azaleas{
-  grid-column:1 / 13; grid-row:14 / 17;
-  margin-top:18px;
+  grid-column:4 / 9; grid-row:13 / 19;
+  border-radius:var(--r-md);
+  box-shadow:var(--shadow-1);
+}
+.vida__foto--basquet{
+  grid-column:9 / 13; grid-row:13 / 19;
   border-radius:var(--r-md);
   box-shadow:var(--shadow-1);
 }
 
 /* Ninguna imagen es un botón: sin cursor ni affordance falsa */
 .vida__foto{ cursor:default; }
-/* Mismo microzoom sutil en las cinco piezas — antes solo lo tenía la
-   dominante, lo que hacía parecer que las demás "no reaccionaban". */
+/* Mismo microzoom sutil en las ocho piezas */
 .vida__foto:hover img{ transform:scale(1.024); }
 
-/* Revelado selectivo: solo 2 de las 5 fotos, no todas */
+/* Revelado selectivo: no todas las piezas */
 .vida__foto--revela{ opacity:0; transform:translateY(22px); transition:opacity 720ms var(--ease-motion), transform 720ms var(--ease-motion); }
 .vida__foto--revela.is-visible{ opacity:1; transform:translateY(0); }
 
@@ -2717,8 +2725,14 @@ body.scrolled .top-nav{
     <figure class="vida__foto vida__foto--entrada">
       <img src="fotos/album-entrada-pinos.jpg" alt="Entrada del barrio bajo los pinos, camino a las instalaciones del club." loading="lazy">
     </figure>
+    <figure class="vida__foto vida__foto--pileta-gente">
+      <img src="fotos/album-pileta-gente.jpg" alt="Familias disfrutando de la pileta del club." loading="lazy">
+    </figure>
     <figure class="vida__foto vida__foto--azaleas">
       <img src="fotos/album-azaleas.jpg" alt="Azaleas en flor en uno de los jardines del club." loading="lazy">
+    </figure>
+    <figure class="vida__foto vida__foto--basquet">
+      <img src="fotos/album-aro-basquet.jpg" alt="Cancha de básquet y vóley del club, rodeada de pinos." loading="lazy">
     </figure>
   </div>
 
@@ -2739,8 +2753,14 @@ body.scrolled .top-nav{
     <figure class="vida__slide vida__slide--alta">
       <img src="fotos/album-bandurrias.jpg" alt="" loading="lazy" style="object-position:50% 72%">
     </figure>
+    <figure class="vida__slide vida__slide--alta">
+      <img src="fotos/album-pileta-gente.jpg" alt="" loading="lazy">
+    </figure>
     <figure class="vida__slide">
       <img src="fotos/album-azaleas.jpg" alt="" loading="lazy">
+    </figure>
+    <figure class="vida__slide">
+      <img src="fotos/album-aro-basquet.jpg" alt="" loading="lazy">
     </figure>
   </div>
 </section>
