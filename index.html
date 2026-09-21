@@ -1583,7 +1583,12 @@ body.scrolled .top-nav{
   box-shadow:var(--shadow-1);
   transition:transform var(--dur-base) var(--ease-motion), box-shadow var(--dur-base) var(--ease-motion);
 }
-.accion:hover, .accion:focus-visible{ transform:translateY(-3px); box-shadow:var(--shadow-2); }
+/* translateY en % se calcula sobre la altura propia de cada tarjeta
+   (comportamiento nativo de CSS): la misma proporción de elevación en
+   una tarjeta baja y ancha (EugenIA) que en una alta y angosta (Cómo
+   llegar, Mapa), en vez de un valor fijo en px que se percibía más
+   pronunciado en unas que en otras. */
+.accion:hover, .accion:focus-visible{ transform:translateY(-1.3%); box-shadow:var(--shadow-2); }
 .accion:active{ transform:translateY(-1px) scale(.99); }
 .accion__contenido{ flex:1; }
 
@@ -1883,7 +1888,8 @@ body.scrolled .top-nav{
 /* Banda superior */
 .vida__foto--dominante{
   grid-column:1 / 8; grid-row:1 / 8;
-  border-radius:0;
+  border-radius:var(--r-md);
+  box-shadow:var(--shadow-1);
   will-change:transform;
 }
 .vida__foto--ninos{
@@ -1916,8 +1922,9 @@ body.scrolled .top-nav{
 
 /* Ninguna imagen es un botón: sin cursor ni affordance falsa */
 .vida__foto{ cursor:default; }
-/* Único microzoom permitido: la fotografía dominante, muy sutil */
-.vida__foto--dominante:hover img{ transform:scale(1.024); }
+/* Mismo microzoom sutil en las cinco piezas — antes solo lo tenía la
+   dominante, lo que hacía parecer que las demás "no reaccionaban". */
+.vida__foto:hover img{ transform:scale(1.024); }
 
 /* Revelado selectivo: solo 2 de las 5 fotos, no todas */
 .vida__foto--revela{ opacity:0; transform:translateY(22px); transition:opacity 720ms var(--ease-motion), transform 720ms var(--ease-motion); }
@@ -2785,10 +2792,10 @@ body.scrolled .top-nav{
 
   <div class="inst__marquesina" aria-hidden="true">
     <div class="inst__marquesina-track">
-      <span class="inst__marquesina-item"><span>PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS ·</span><span>PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS ·</span><span>PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS ·</span><span>PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS ·</span><span>PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS ·</span></span>
-      <span class="inst__marquesina-item"><span>PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS ·</span><span>PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS ·</span><span>PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS ·</span><span>PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS ·</span><span>PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS ·</span></span>
+      <span class="inst__marquesina-item"><span>PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS · SENDERO DE CAMINATAS · PLAZA DE JUEGOS · SALÓN DE EVENTOS · ECOSENDERO · CANTINA ·</span><span>PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS · SENDERO DE CAMINATAS · PLAZA DE JUEGOS · SALÓN DE EVENTOS · ECOSENDERO · CANTINA ·</span><span>PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS · SENDERO DE CAMINATAS · PLAZA DE JUEGOS · SALÓN DE EVENTOS · ECOSENDERO · CANTINA ·</span><span>PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS · SENDERO DE CAMINATAS · PLAZA DE JUEGOS · SALÓN DE EVENTOS · ECOSENDERO · CANTINA ·</span><span>PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS · SENDERO DE CAMINATAS · PLAZA DE JUEGOS · SALÓN DE EVENTOS · ECOSENDERO · CANTINA ·</span></span>
+      <span class="inst__marquesina-item"><span>PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS · SENDERO DE CAMINATAS · PLAZA DE JUEGOS · SALÓN DE EVENTOS · ECOSENDERO · CANTINA ·</span><span>PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS · SENDERO DE CAMINATAS · PLAZA DE JUEGOS · SALÓN DE EVENTOS · ECOSENDERO · CANTINA ·</span><span>PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS · SENDERO DE CAMINATAS · PLAZA DE JUEGOS · SALÓN DE EVENTOS · ECOSENDERO · CANTINA ·</span><span>PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS · SENDERO DE CAMINATAS · PLAZA DE JUEGOS · SALÓN DE EVENTOS · ECOSENDERO · CANTINA ·</span><span>PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS · SENDERO DE CAMINATAS · PLAZA DE JUEGOS · SALÓN DE EVENTOS · ECOSENDERO · CANTINA ·</span></span>
     </div>
-    <p class="inst__marquesina-static">PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS · PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS · PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS · PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS · PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS · PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS ·</p>
+    <p class="inst__marquesina-static">PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS · SENDERO DE CAMINATAS · PLAZA DE JUEGOS · SALÓN DE EVENTOS · ECOSENDERO · CANTINA · PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS · SENDERO DE CAMINATAS · PLAZA DE JUEGOS · SALÓN DE EVENTOS · ECOSENDERO · CANTINA · PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS · SENDERO DE CAMINATAS · PLAZA DE JUEGOS · SALÓN DE EVENTOS · ECOSENDERO · CANTINA · PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS · SENDERO DE CAMINATAS · PLAZA DE JUEGOS · SALÓN DE EVENTOS · ECOSENDERO · CANTINA · PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS · SENDERO DE CAMINATAS · PLAZA DE JUEGOS · SALÓN DE EVENTOS · ECOSENDERO · CANTINA · PÁDEL · TENIS · GIMNASIO · BÁSQUET · VÓLEY · FÚTBOL · PILETAS · SENDERO DE CAMINATAS · PLAZA DE JUEGOS · SALÓN DE EVENTOS · ECOSENDERO · CANTINA ·</p>
   </div>
 
   <div class="inst__grid">
