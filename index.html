@@ -1946,6 +1946,14 @@ body.scrolled .top-nav{
   border-radius:var(--r-md);
   box-shadow:var(--shadow-1);
 }
+/* Sexta pieza, agregada sin tocar las cinco anteriores — banda baja de
+   cierre, más chica que las demás a propósito. */
+.vida__foto--azaleas{
+  grid-column:1 / 13; grid-row:14 / 17;
+  margin-top:18px;
+  border-radius:var(--r-md);
+  box-shadow:var(--shadow-1);
+}
 
 /* Ninguna imagen es un botón: sin cursor ni affordance falsa */
 .vida__foto{ cursor:default; }
@@ -2690,7 +2698,7 @@ body.scrolled .top-nav{
 <section class="vida" id="album">
   <div class="vida__header">
     <span class="eyebrow">Un vistazo</span>
-    <h2 class="vida__titulo">Amigos y mucho verde por compartir</h2>
+    <h2 class="vida__titulo">Familia, amigos y mucho verde por compartir</h2>
   </div>
 
   <div class="vida__mosaico" id="vidaMosaico">
@@ -2708,6 +2716,9 @@ body.scrolled .top-nav{
     </figure>
     <figure class="vida__foto vida__foto--entrada">
       <img src="fotos/album-entrada-pinos.jpg" alt="Entrada del barrio bajo los pinos, camino a las instalaciones del club." loading="lazy">
+    </figure>
+    <figure class="vida__foto vida__foto--azaleas">
+      <img src="fotos/album-azaleas.jpg" alt="Azaleas en flor en uno de los jardines del club." loading="lazy">
     </figure>
   </div>
 
@@ -2727,6 +2738,9 @@ body.scrolled .top-nav{
     </figure>
     <figure class="vida__slide vida__slide--alta">
       <img src="fotos/album-bandurrias.jpg" alt="" loading="lazy" style="object-position:50% 72%">
+    </figure>
+    <figure class="vida__slide">
+      <img src="fotos/album-azaleas.jpg" alt="" loading="lazy">
     </figure>
   </div>
 </section>
@@ -2849,7 +2863,7 @@ body.scrolled .top-nav{
       <span class="inst__velo" aria-hidden="true"></span>
       <figcaption class="inst__caption">
         <span class="inst__eyebrow inst__eyebrow--pill">Celebrar</span>
-        <p>Para compartir: salón de eventos y cantina.</p>
+        <p>Salón de eventos y cantina.</p>
       </figcaption>
     </figure>
   </div>
